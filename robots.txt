@@ -16,3 +16,4 @@ User-agent: GPTBot
 Allow: /
 
 Sitemap: https://all-pick.kr/sitemap.xml
+Sitemap: https://all-pick.kr/rss.xml
