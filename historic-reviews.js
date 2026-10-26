@@ -400,7 +400,7 @@ const FIXED_REVIEWS = [
     category: 'KT',
     views: 143,
     date: '2026-06-13T10:40:00Z',
-    imageUrl: 'images/review-new-1.png',
+    imageUrl: 'images/review-new-1.webp',
     content: '이사하면서 신규로 인터넷이랑 TV2대 설치했습니다! 신규 설치인만큼 꼼꼼히 알아보고 결정했는데 상담부터 설치까지 전체적으로 만족스럽네요! 궁금한 점도 자세하게 설명해주시고, 제가 원하는 조건에 맞춰서 알아보기 쉽게 안내해주셔서 선택하는 데 도움이 많이 됐습니다. 설치도 깔끔하고 빠르게 진행해주셔서 좋았어요. 처음부터 끝까지 응대가 친절해서 주변에도 추천하고 싶은 업체입니다! 타업체 20곳 정도 비교했는데 일처리 확실하고 지원금도 가장 짱짱해서 비교한 보람이 있어요 😊'
   },
   {
@@ -410,7 +410,7 @@ const FIXED_REVIEWS = [
     category: 'KT',
     views: 96,
     date: '2026-06-06T15:05:00Z',
-    imageUrl: 'images/review-new-2.png',
+    imageUrl: 'images/review-new-2.webp',
     content: '인터넷 가입 설명도 친절하고 진행도 빨라서 좋았습니다! 요금이랑 혜택도 비교해서 잘 알려주시고 설치까지 문제없이 잘 받았습니다~!!'
   },
   {
@@ -420,7 +420,7 @@ const FIXED_REVIEWS = [
     category: 'KT',
     views: 118,
     date: '2026-06-15T11:20:00Z',
-    imageUrl: 'images/review-new-3.png',
+    imageUrl: 'images/review-new-3.webp',
     content: '급하게 연락드렸는데 빠르게 당일 설치 해주셨어요. 진심 만족스러워서 리뷰이벤트 아니고 리얼 후기 남기고 갑니다!!!\n약정끝나고 3년뒤에도 여기루 연락드릴게요~~감사드립니다!!!!!'
   },
   {
@@ -430,7 +430,7 @@ const FIXED_REVIEWS = [
     category: 'KT',
     views: 74,
     date: '2026-06-09T13:35:00Z',
-    imageUrl: 'images/review-new-4.png',
+    imageUrl: 'images/review-new-4.webp',
     content: '상담 바로 다음날 설치까지 빠르게 완료되었습니다. 상담도 친절하고 만족스럽습니다.'
   },
   {
@@ -440,7 +440,7 @@ const FIXED_REVIEWS = [
     category: 'LG',
     views: 41,
     date: '2026-06-27T12:10:00Z',
-    imageUrl: 'images/review-new-5.png',
+    imageUrl: 'images/review-new-5.webp',
     content: '인터넷 티비 설치했는데 기사님도 친절하게 응대해주시고 빨리 해주셔서 너무 만족스럽고 인터넷도 잘되서 만족스러워요 나중에 지인들도 설치할일있으면 추천해줄려구요 🥺🥺잘쓰겠습니다 감사합니다 ~~'
   },
   {
@@ -450,7 +450,7 @@ const FIXED_REVIEWS = [
     category: 'LG',
     views: 58,
     date: '2026-06-25T09:30:00Z',
-    imageUrl: 'images/review-new-6.png',
+    imageUrl: 'images/review-new-6.webp',
     content: '상담응대가 굉장히 빠르고 다른곳보다 사은품이라던지 혜택이 훨씬좋습니다.\n당일예약 당일설치까지완료되었습니다. 굿.'
   },
   {
@@ -460,7 +460,7 @@ const FIXED_REVIEWS = [
     category: 'LG',
     views: 33,
     date: '2026-06-28T14:20:00Z',
-    imageUrl: 'images/review-new-7.png',
+    imageUrl: 'images/review-new-7.webp',
     content: '처음 알아볼 때 인터넷 가입 조건이 복잡해서 걱정했는데, 필요한 내용들을 이해하기 쉽게 설명해주셔서 편하게 진행할 수 있었습니다.\n\n신청부터 설치까지 과정도 어렵지 않았고, 궁금한 부분이 있을 때 답변도 잘 해주셔서 만족했습니다. 인터넷 설치 알아보시는 분들이라면 여러 조건 비교해보실 때 한 번 상담받아보셔도 괜찮을 것 같습니다.'
   },
   {
@@ -470,7 +470,7 @@ const FIXED_REVIEWS = [
     category: 'LG',
     views: 67,
     date: '2026-06-21T16:45:00Z',
-    imageUrl: 'images/review-new-8.png',
+    imageUrl: 'images/review-new-8.webp',
     content: '인터넷 가입 너무나 만족스럽습니다.\n신속하게 가입해주시고 사은품도 바로 입금되어 다음에 또 연락드리겠습니다.'
   }
 ];

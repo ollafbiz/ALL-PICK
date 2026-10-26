@@ -17,5 +17,17 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
-Sitemap: https://all-pick.kr/sitemap.xml
-Sitemap: https://all-pick.kr/rss.xml
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.all-pick.kr/sitemap.xml
+Sitemap: https://www.all-pick.kr/rss.xml
