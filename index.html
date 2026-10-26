@@ -375,7 +375,7 @@ html.is-phone::-webkit-scrollbar, html.is-phone body::-webkit-scrollbar { displa
         <a class="mo-only" href="#/support" style="{{ navSupport }}">고객지원</a>
       </nav>
     </div>
-    <a class="head-phone" href="tel:" style="display: flex; align-items: center; gap: 6px; color: #4167f6; font-weight: 600; font-size: 14px; text-decoration: none; background: #eef2ff; padding: 8px 16px; border-radius: 20px;">
+    <a class="head-phone" href="tel:1800-9774" style="display: flex; align-items: center; gap: 6px; color: #4167f6; font-weight: 600; font-size: 14px; text-decoration: none; background: #eef2ff; padding: 8px 16px; border-radius: 20px;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
       전화상담
     </a>
@@ -626,10 +626,8 @@ html.is-phone::-webkit-scrollbar, html.is-phone body::-webkit-scrollbar { displa
           <div class="input-row">
             <input type="text" placeholder="이름 (선택)" value="{{ homeName }}" onChange="{{ setHomeName }}" />
             <div class="req-wrapper">
-              <sc-if value="{{ homePhoneMissing }}" hint-placeholder-val="{{ false }}">
-                <span class="req-badge">필수입력</span>
-              </sc-if>
-              <input type="text" placeholder="연락처 입력 (필수)" class="{{ homePhoneClass }}" value="{{ homePhone }}" onChange="{{ setHomePhone }}" />
+              <span class="req-badge">필수입력</span>
+              <input type="text" placeholder="연락처 입력 (필수)" class="req-input" value="{{ homePhone }}" onChange="{{ setHomePhone }}" />
             </div>
           </div>
           <textarea placeholder="상담내용(선택)" value="{{ homeMemo }}" onChange="{{ setHomeMemo }}"></textarea>
@@ -1383,7 +1381,7 @@ html.is-phone::-webkit-scrollbar, html.is-phone body::-webkit-scrollbar { displa
     <div style="font-size: 14px; font-weight: 600; color: #64748b; margin-bottom: 6px;">올픽 상담 대표번호</div>
     <div style="font-size: 34px; font-weight: 800; color: #0f172a; letter-spacing: 0.5px; margin-bottom: 6px;">1800-9774</div>
     <div style="font-size: 13px; color: #94a3b8; margin-bottom: 22px;">365일 상담 가능 · 휴대폰으로 전화 주세요</div>
-    <button onClick="{{ copyPcCall }}" style="width: 100%; background: linear-gradient(90deg, #3d7eff 0%, #1a3cbb 100%); color: #fff; border: none; padding: 15px 0; border-radius: 11px; font-size: 15.5px; font-weight: 800; cursor: pointer; font-family: inherit;">{{ pcCallCopyLabel }}</button>
+    <button onClick="{{ closePcCall }}" style="width: 100%; background: #f1f5f9; color: #334155; border: none; padding: 15px 0; border-radius: 11px; font-size: 15.5px; font-weight: 800; cursor: pointer; font-family: inherit;">닫기</button>
   </div>
 </div>
 </sc-if>
@@ -2555,7 +2553,7 @@ html.is-phone::-webkit-scrollbar, html.is-phone body::-webkit-scrollbar { displa
     <p style="margin-bottom: 12px;"><img src="images/allpick-logo-sm.png" alt="올픽" style="height: 24px; width: auto; display: block; opacity: 0.9;" loading="lazy" decoding="async" /></p>
     <p>사업자등록번호: 834-23-02069 | 통신판매업신고번호: 제2026-수원팔달-0488호</p>
     <p>주소: 경기도 수원시 팔달구 경수대로 507번길 12-4, 2층</p>
-    <p>대표번호: 1800-9774 | 개인정보관리책임자: 구자경</p>
+    <p style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px;"><span>대표번호 <a href="tel:1800-9774" style="font-size: 20px; font-weight: 800; color: #0f172a; letter-spacing: 0.3px; text-decoration: none;">1800-9774</a></span><span>| 개인정보관리책임자: 구자경</span></p>
     <div class="footer-bottom">
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
         <a href="#/terms" onClick="{{ openTermsPop }}" style="display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: #334155; background: #ffffff;" style-hover="border-color: #2563eb; color: #2563eb;">이용약관</a>
@@ -2993,6 +2991,14 @@ const QUIZ = [
     ]
   }
 ];
+
+function fmtPhone(v) {
+  const d = String(v || '').replace(/[^0-9]/g, '').slice(0, 11);
+  if (d.length < 4) return d;
+  if (d.length < 8) return d.slice(0, 3) + '-' + d.slice(3);
+  if (d.length === 10) return d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
+  return d.slice(0, 3) + '-' + d.slice(3, 7) + '-' + d.slice(7);
+}
 
 const TOPBAR_MSGS = [
   { text: '올픽에서 신청하면 최대지원금 138만원' },
@@ -3566,6 +3572,7 @@ class Component extends DCLogic {
     const top = () => { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } };
     const set = (k) => (e) => {
       const v = e && e.target ? (e.target.type === 'checkbox' ? e.target.checked : e.target.value) : e;
+      if (/phone/i.test(k) && typeof v === 'string') v = fmtPhone(v);
       this.setState(s => ({ sjf: Object.assign({}, SJ_DEF, s.sjf || {}, { [k]: v }) }));
     };
     const on = {};
@@ -3888,7 +3895,10 @@ class Component extends DCLogic {
   submitConsult(payload, okMsg) {
     const done = () => { if (okMsg) alert(okMsg); };
     const fail = (e) => { console.error('consult', e); alert(e && e.message === 'invalid phone' ? '휴대폰 번호를 정확히 입력해주세요. (예: 010-1234-5678)' : '접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'); };
-    const run = (fb) => fb.addConsult(payload).then(done).catch(fail);
+    const digitsOnly = String(payload.phone || '').replace(/[^0-9]/g, '');
+    if (!/^01[016789][0-9]{7,8}$/.test(digitsOnly)) { fail(new Error('invalid phone')); return; }
+    done();
+    const run = (fb) => fb.addConsult(payload).catch(e => console.error('consult', e));
     if (this._fb && this._fb.addConsult) { run(this._fb); return; }
     import('./firebase-boards.js').then(fb => { this._fb = fb; run(fb); }).catch(fail);
   }
@@ -4784,7 +4794,7 @@ class Component extends DCLogic {
       closeModal: () => this.setState({ modalOpen: false }),
       togglePrivacy: () => this.setState(s => ({ showPrivacy: !s.showPrivacy })),
       setModalName: (e) => this.setState({ modalName: e.target.value }),
-      setModalPhone: (e) => this.setState({ modalPhone: e.target.value }),
+      setModalPhone: (e) => this.setState({ modalPhone: fmtPhone(e.target.value) }),
       setModalAgree: (e) => this.setState({ modalAgree: e.target.checked }),
       submitModal: () => {
         if (!this.state.modalPhone) { alert('연락처를 입력해주세요.'); return; }
@@ -4850,7 +4860,7 @@ class Component extends DCLogic {
       homeMemo: this.state.homeMemo || '',
       homeAgree: this.state.homeAgree !== false,
       setHomeName: (e) => this.setState({ homeName: e.target.value }),
-      setHomePhone: (e) => this.setState({ homePhone: e.target.value, homePhoneMissing: false }),
+      setHomePhone: (e) => this.setState({ homePhone: fmtPhone(e.target.value), homePhoneMissing: false }),
       homePhoneMissing: !!this.state.homePhoneMissing,
       homePhoneClass: this.state.homePhoneMissing ? 'req-input' : '',
       setHomeMemo: (e) => this.setState({ homeMemo: e.target.value }),

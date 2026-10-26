@@ -91,11 +91,21 @@ export async function addConsult(payload) {
     site: 'allpick',
     createdAt: fs.serverTimestamp()
   };
-  const ref = await fs.addDoc(fs.collection(db, 'consultations'), data);
+  // 사무실 관리자 서버용 필드 (undefined 방지)
+  const detail = String(payload.detail || '').trim();
+  const head = detail.split('/')[0].trim();
+  const CARR = ['KT', 'SK', 'SKB', 'SK브로드밴드', 'LG', 'LG U+', 'LG유플러스', 'KT스카이라이프', '스카이라이프', 'LG헬로비전', '헬로비전'];
+  const office = {
+    phoneHyphen: phone.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3'),
+    carrier: CARR.indexOf(head) >= 0 ? head : (payload.carrier || ''),
+    serviceType: String(payload.source || '상담신청'),
+    serviceDetail: detail ? '[선택 상품]\n- ' + detail.split('/').map(s => s.trim()).filter(Boolean).join('\n- ') : '(선택 상품 없음)',
+    memo: String(payload.memo || '')
+  };
 
-  // 메일 알림: Vercel 서버 함수(/api/send-inquiry-mail)로 백그라운드 전송
+  // 1) 메일 알림 + 사무실 서버 전달 (Vercel 함수가 둘 다 처리)
   try {
-    const body = Object.assign({}, data, { createdAt: undefined, consent: true });
+    const body = Object.assign({}, data, office, { createdAt: undefined, consent: true });
     fetch('/api/send-inquiry-mail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -104,7 +114,14 @@ export async function addConsult(payload) {
     }).catch(e => console.warn('mail api', e));
   } catch (e) { console.warn('mail api', e); }
 
-  return ref.id;
+  // 2) Firestore 저장. 서버 응답이 늦어도 SDK가 대기열에 넣고 재시도하므로 화면은 8초 이상 붙잡지 않음
+  const write = fs.addDoc(fs.collection(db, 'consultations'), data);
+  const result = await Promise.race([
+    write.then(ref => ref.id),
+    new Promise(r => setTimeout(() => r('queued'), 8000))
+  ]);
+  write.catch(e => console.error('consultations write', e && e.code, e && e.message));
+  return result;
 }
 
 export async function bumpViews(name, id, current) {
