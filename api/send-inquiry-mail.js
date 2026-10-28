@@ -34,7 +34,7 @@ async function forwardToOffice(b, phoneHyphen) {
 async function sendMail(b, phoneHyphen) {
   const user = process.env.GMAIL_USER;
   const pass = process.env.GMAIL_APP_PASSWORD;
-  const to = process.env.NOTIFY_TO || 'ollafmail@gmail.com';
+  const to = process.env.NOTIFY_TO || process.env.MAIL_TO || 'ollafmail@gmail.com';
   if (!user || !pass) return { ok: false, error: 'Missing Gmail credentials' };
   const rows = [
     ['접수 경로', b.source], ['이름', b.name || '(미입력)'], ['연락처', phoneHyphen],

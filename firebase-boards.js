@@ -19,7 +19,7 @@ async function load() {
     import(`https://www.gstatic.com/firebasejs/${V}/firebase-auth.js`)
   ]);
   const instance = app.getApps().length ? app.getApp() : app.initializeApp(CFG);
-  mods = { fs, auth, db: fs.getFirestore(instance), authInstance: auth.getAuth(instance) };
+  mods = { fs, auth, db: fs.getFirestore(instance), adminDb: fs.getFirestore(instance, 'ai-studio-17a97ac4-a769-4c9a-b823-6bda3b219e41'), authInstance: auth.getAuth(instance) };
   return mods;
 }
 
@@ -73,7 +73,8 @@ export async function addEntry(name, payload) {
 const NOTIFY_TO = 'ollafmail@gmail.com';
 
 export async function addConsult(payload) {
-  const { fs, db } = await load();
+  // 상담은 관리자 사이트가 읽는 DB(올라프와 같은 DB)에 저장. 게시판은 기본 DB 유지
+  const { fs, adminDb: db } = await load();
   const qs = new URLSearchParams(location.search);
   const phone = String(payload.phone || '').replace(/[^0-9]/g, '');
   if (!/^01[016789][0-9]{7,8}$/.test(phone)) throw new Error('invalid phone');
