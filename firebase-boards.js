@@ -70,7 +70,7 @@ export async function addEntry(name, payload) {
   return ref.id;
 }
 
-const NOTIFY_TO = 'ollafmail@gmail.com';
+const NOTIFY_TO = 'alnetreport@gmail.com';
 
 export async function addConsult(payload) {
   // 상담은 관리자 사이트가 읽는 DB(올라프와 같은 DB)에 저장. 게시판은 기본 DB 유지
