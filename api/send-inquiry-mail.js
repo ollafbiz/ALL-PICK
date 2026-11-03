@@ -34,7 +34,7 @@ async function forwardToOffice(b, phoneHyphen) {
 async function sendMail(b, phoneHyphen) {
   const user = process.env.GMAIL_USER;
   const pass = process.env.GMAIL_APP_PASSWORD;
-  const to = process.env.NOTIFY_TO || process.env.MAIL_TO || 'alnetreport@gmail.com';
+  const to = process.env.NOTIFY_TO || process.env.MAIL_TO || 'ollafmail@gmail.com';
   if (!user || !pass) return { ok: false, error: 'Missing Gmail credentials' };
   const rows = [
     ['접수 경로', b.source], ['이름', b.name || '(미입력)'], ['연락처', phoneHyphen],
@@ -53,70 +53,13 @@ async function sendMail(b, phoneHyphen) {
   }
 }
 
-/* ───── 보안 가드 (SMTP 헤더 주입 / 공격 패턴 / Origin 체크) ───── */
-const ALLOWED_ORIGINS = ['https://www.all-pick.kr', 'https://all-pick.kr'];
-const ATTACK_PATTERNS = [
-  /<script\b/i, /<sCRiPt/i, /javascript\s*:/i, /on(error|load|click|focus)\s*=/i,
-  /<iframe\b/i, /document\.(cookie|write)/i, /\beval\s*\(/i,
-  /\r\n|%0A|%0D/i,                                     /* SMTP 헤더 주입 */
-  /(?:^|\n)\s*(bcc|cc|content-type|mime-version|from)\s*:/i,
-  /artex[0-9]|probe-test@|maxxspace|nikto|sqlmap|@example\.(com|org|net)/i,
-  /\${jndi:|union\s+select|or\s+1\s*=\s*1/i
-];
-function hasAttack(val) {
-  if (val == null) return null;
-  const s = String(val);
-  if (s.length > 5000) return 'too_long';
-  for (const p of ATTACK_PATTERNS) if (p.test(s)) return p.toString();
-  return null;
-}
-
-/* 간단한 메모리 레이트 리미트 (Vercel 서버리스는 인스턴스별이지만 1차 방어) */
-const _rl = new Map();
-function rateLimit(ip) {
-  const now = Date.now();
-  const w = 60 * 1000, max = 10;  /* IP당 1분 10회 */
-  const rec = _rl.get(ip) || { count: 0, reset: now + w };
-  if (now > rec.reset) { rec.count = 0; rec.reset = now + w; }
-  rec.count++;
-  _rl.set(ip, rec);
-  if (_rl.size > 1000) { for (const k of _rl.keys()) { _rl.delete(k); break; } }  /* LRU-ish */
-  return rec.count <= max;
-}
-
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'POST only' });
-
-  /* Origin 체크 */
-  const origin = req.headers.origin || '';
-  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
-    return res.status(403).json({ success: false, error: 'forbidden origin' });
-  }
-
-  /* 레이트 리미트 */
-  const ip = (req.headers['x-forwarded-for'] || req.connection?.remoteAddress || '').split(',')[0].trim();
-  if (!rateLimit(ip)) return res.status(429).json({ success: false, error: 'too many requests' });
 
   const b = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
   const phone = String(b.phone || '').replace(/[^0-9]/g, '');
   if (!/^01[016789][0-9]{7,8}$/.test(phone)) return res.status(400).json({ success: false, error: 'invalid phone' });
   if (b.consent !== true) return res.status(400).json({ success: false, error: 'consent required' });
-
-  /* 공격 패턴 체크 — name/memo/message/interest/serviceDetail 등 모든 사용자 입력 */
-  for (const field of ['name','memo','message','interest','serviceDetail','source','carrier']) {
-    const hit = hasAttack(b[field]);
-    if (hit) {
-      console.warn('[SECURITY] attack blocked field='+field+' pattern='+hit+' ip='+ip);
-      return res.status(400).json({ success: false, error: 'suspicious content' });
-    }
-  }
-
-  /* Honeypot 필드 체크 (프런트에 숨겨진 input "website" 추가 시) */
-  if (b.website) {
-    console.warn('[SECURITY] honeypot triggered ip='+ip);
-    return res.status(200).json({ success: true });  /* 봇은 성공으로 속여서 재시도 안 하게 */
-  }
-
   const phoneHyphen = phone.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 
   const [mail, office] = await Promise.all([sendMail(b, phoneHyphen), forwardToOffice(b, phoneHyphen)]);

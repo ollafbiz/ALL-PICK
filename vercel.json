@@ -3,31 +3,31 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/images/(.*)",
       "headers": [
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-DNS-Prefetch-Control", "value": "off" },
-        { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://t.xn--t60b76iuxn.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com; frame-src 'self' https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=86400"
+        }
       ]
     },
     {
-      "source": "/(admin|wp-admin|wp-login\\.php|\\.env|phpmyadmin|\\.git/.*|xmlrpc\\.php|config\\.php|backup\\.sql|web\\.config)",
+      "source": "/(.*)\\.(js|css)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon.ico|favicon-16x16.png|favicon-32x32.png|apple-touch-icon.png|android-chrome-192x192.png|android-chrome-512x512.png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
       ]
     }
-  ],
-  "redirects": [
-    { "source": "/admin", "destination": "/", "permanent": false },
-    { "source": "/wp-admin", "destination": "/", "permanent": false },
-    { "source": "/wp-login.php", "destination": "/", "permanent": false },
-    { "source": "/.env", "destination": "/", "permanent": false },
-    { "source": "/phpmyadmin", "destination": "/", "permanent": false },
-    { "source": "/xmlrpc.php", "destination": "/", "permanent": false }
   ]
 }
