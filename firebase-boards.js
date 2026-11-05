@@ -8,6 +8,7 @@ const CFG = {
 };
 
 const ADMIN_EMAILS = ['ollafbiz@gmail.com'];
+const SITE = 'allpick';
 const V = '11.3.1';
 
 let mods = null;
@@ -31,9 +32,10 @@ function toMs(v) {
   return isNaN(t) ? Date.now() : t;
 }
 
+// 게시판도 관리자 DB 사용 (기본 DB는 이 프로젝트에 없어 응답이 없음). 올라프 글과 섞이지 않게 site로 구분
 export async function fetchCollection(name) {
-  const { fs, db } = await load();
-  const snap = await fs.getDocs(fs.collection(db, name));
+  const { fs, adminDb: db } = await load();
+  const snap = await fs.getDocs(fs.query(fs.collection(db, name), fs.where('site', '==', SITE)));
   const out = [];
   snap.forEach(d => {
     const o = d.data() || {};
@@ -57,17 +59,21 @@ export async function fetchCollection(name) {
 }
 
 export async function addEntry(name, payload) {
-  const { fs, db } = await load();
+  const { fs, adminDb: db } = await load();
   const clean = Object.assign({}, payload);
   ['isDeleted', 'adminResponse', 'adminReply', 'status'].forEach(k => { delete clean[k]; });
   clean.title = String(clean.title || '').slice(0, 100);
   clean.author = String(clean.author || '익명').slice(0, 50);
   clean.content = String(clean.content || '').slice(0, name === 'reviews' ? 5000 : 2000);
-  const ref = await fs.addDoc(fs.collection(db, name), Object.assign(clean, {
+  const write = fs.addDoc(fs.collection(db, name), Object.assign(clean, {
+    site: SITE,
     createdAt: fs.serverTimestamp(),
     views: 0
   }));
-  return ref.id;
+  return await Promise.race([
+    write.then(ref => ref.id),
+    new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 12000))
+  ]);
 }
 
 const NOTIFY_TO = 'ollafmail@gmail.com';
@@ -127,13 +133,13 @@ export async function addConsult(payload) {
 
 export async function bumpViews(name, id, current) {
   try {
-    const { fs, db } = await load();
+    const { fs, adminDb: db } = await load();
     await fs.updateDoc(fs.doc(db, name, id), { views: (current || 0) + 1 });
   } catch (e) {}
 }
 
 export async function replyTo(name, id, text) {
-  const { fs, db } = await load();
+  const { fs, adminDb: db } = await load();
   await fs.updateDoc(fs.doc(db, name, id), { adminResponse: text, status: 'answered' });
 }
 
