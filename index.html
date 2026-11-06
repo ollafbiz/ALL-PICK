@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){try{var a=Math.min(screen.width,screen.height),b=Math.max(screen.width,screen.height);if(!(/[?&]m=1/.test(location.search)||(a<=600&&navigator.maxTouchPoints>0)))return;var w=window.innerWidth>window.innerHeight?b:a,v=document.querySelector('meta[name="viewport"]');if(v)v.setAttribute('content','width=480, initial-scale='+(w/480).toFixed(4));}catch(e){}})();</script>
+<script>(function(){try{var a=Math.min(screen.width,screen.height),b=Math.max(screen.width,screen.height);if(!(/[?&]m=1/.test(location.search)||(a<=600&&navigator.maxTouchPoints>0)))return;var w=window.innerWidth>window.innerHeight?b:a,v=document.querySelector('meta[name="viewport"]');if(v)v.setAttribute('content','width=430, initial-scale='+(w/430).toFixed(4));}catch(e){}})();</script>
 <script>document.documentElement.className+=" js"</script>
 <style>.js #seo-static{display:none}</style>
 <link rel="preload" as="image" href="images/main.webp" fetchpriority="high">
@@ -75,7 +75,7 @@ a:hover { color: #4167f6; }
 .subsidy-card.form-card .subsidy-form .primary-btn { padding: 19px; font-size: 18px; }
 .subsidy-card.form-card .subsidy-form .checkbox-row { font-size: 14px; }
 .subsidy-card.form-card .subsidy-form .checkbox-row button { font-size: 12px; padding: 4px 10px; }
-.subsidy-form .req-badge { animation: req-bounce 1.4s ease-in-out infinite; }
+.subsidy-form .req-wrapper .req-input { border: 2px solid #f7e08f !important; }
 @media (max-width: 800px) {
   .subsidy-top-row { grid-template-columns: 1fr; gap: 14px; margin-bottom: 36px !important; }
   .card-section { margin-top: 36px !important; }
@@ -316,6 +316,52 @@ html.is-phone::-webkit-scrollbar, html.is-phone body::-webkit-scrollbar { displa
 .is-phone .mo-tabbar { border-top: 1px solid #eef0f4 !important; box-shadow: none !important; height: 60px !important; }
 .is-phone .mo-tabbar a, .is-phone .mo-tabbar button { color: #9aa3b2 !important; font-size: 11px !important; font-weight: 500 !important; gap: 3px !important; }
 .is-phone .mo-tabbar svg { width: 21px !important; height: 21px !important; stroke-width: 1.7; }
+.is-phone .self-page { padding: 14px 0 76px !important; }
+.is-phone .self-intro { display: none !important; }
+.is-phone .self-intro > div, .is-phone .self-intro > p { display: none !important; }
+.is-phone .self-intro h1 { margin: 0 !important; font-size: 20px !important; letter-spacing: -0.7px !important; }
+.is-phone .self-card { padding: 18px 16px !important; border-radius: 16px !important; }
+.is-phone .self-progress { padding: 12px 14px !important; margin-bottom: 18px !important; }
+.is-phone .self-q { margin-bottom: 16px !important; }
+.is-phone .self-q h3 { font-size: 17px !important; }
+.is-phone .self-carriers { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 10px !important; }
+.is-phone .self-carriers > div { min-height: 104px !important; padding: 14px 4px 12px !important; gap: 8px !important; }
+.is-phone .self-carriers img { max-width: 82px !important; }
+.is-phone .self-carriers span:last-child { font-size: 13px !important; white-space: nowrap; }
+.is-phone .self-nav { margin-top: 16px !important; }
+.is-phone .ev-page { padding-top: 16px !important; }
+.is-phone .cards-swipe { flex-direction: column !important; overflow: visible !important; scroll-snap-type: none !important; gap: 12px !important; padding-bottom: 0 !important; }
+.is-phone .cards-swipe::after { display: none !important; }
+.is-phone .cards-swipe > div { flex: none !important; width: 100% !important; box-sizing: border-box; display: grid !important; grid-template-columns: 112px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 14px; row-gap: 10px; align-items: center !important; padding: 16px !important; text-align: left !important; }
+.is-phone .cards-swipe > div > div:first-child { grid-row: 1 / span 2; height: 112px !important; margin-bottom: 0 !important; }
+.is-phone .cards-swipe > div > div:nth-child(2) { background: none !important; padding: 0 !important; margin-bottom: 0 !important; align-self: end; }
+.is-phone .cards-swipe > div > div:nth-child(2) > div { justify-content: flex-start !important; height: 26px !important; margin-bottom: 4px !important; }
+.is-phone .cards-swipe > div > div:nth-child(2) > span { font-size: 15.5px !important; white-space: nowrap; }
+.is-phone .cards-swipe > div > div:nth-child(2) > div img { height: 22px !important; }
+.is-phone .cards-swipe > div > a { align-self: start; padding: 9px 0 !important; font-size: 13px !important; border-radius: 8px !important; }
+.is-phone .home-faq button > span { font-size: 15px !important; }
+.is-phone .home-faq button { min-height: 64px; box-sizing: border-box; }
+.is-phone .home-faq { margin-top: 48px !important; }
+.is-phone .hdr-left { position: relative; }
+.is-phone .hdr-left::after { content: "\203A"; position: absolute; right: -20px; bottom: 2px; width: 72px; height: 46px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; box-sizing: border-box; background: linear-gradient(90deg, rgba(255,255,255,0), #ffffff 62%); color: #475569; font-size: 22px; font-weight: 600; pointer-events: none; z-index: 2; transition: opacity 0.15s ease; }
+html.nav-end.is-phone .hdr-left::after { opacity: 0; }
+.is-phone .popular-plan-card { border: 1px solid #d3dce8 !important; box-shadow: none !important; }
+.is-phone .live-t { font-size: 17px !important; letter-spacing: -0.5px !important; }
+.is-phone .rv-sec-t { margin-bottom: 4px !important; }
+.is-phone .rv-sec-s { font-size: 13px !important; color: #8b95a1 !important; }
+.is-phone .bd-write { padding: 9px 14px !important; font-size: 13.5px !important; border-radius: 8px !important; gap: 5px !important; }
+.is-phone .bd-write svg { width: 14px !important; height: 14px !important; }
+.is-phone .ev-cta { flex-wrap: wrap; gap: 14px 12px !important; padding: 20px !important; border-radius: 16px !important; }
+.is-phone .ev-cta-txt { order: 1; flex: 1 1 0 !important; }
+.is-phone .ev-cta-txt h3 { font-size: 19px !important; }
+.is-phone .ev-cta-txt p { font-size: 13px !important; }
+.is-phone .ev-cta-tile { order: 2; width: 62px !important; height: 62px !important; border-radius: 16px !important; }
+.is-phone .ev-cta-tile svg { width: 40px !important; }
+.is-phone .ev-cta-btn { order: 3; flex: 1 0 100% !important; box-sizing: border-box; padding: 13px 14px !important; }
+.is-phone .ev-head { display: none !important; }
+.is-phone .ev-head h1 { font-size: 22px !important; margin-bottom: 12px !important; letter-spacing: -0.9px !important; }
+.is-phone .self-carriers > div > span:first-child:not(:last-child)[style*="absolute"] { top: 3px !important; right: 3px !important; padding: 1px 4px !important; font-size: 9.5px !important; white-space: nowrap; }
+.is-phone .self-card span { word-break: keep-all; }
 .is-phone .mo-tabbar a:first-child { color: #1e293b !important; }
 .is-phone footer { background: #eef1f5 !important; margin-top: 30px; }
 footer .footer-bottom { margin-top: 16px !important; padding-top: 14px !important; }
@@ -337,8 +383,15 @@ footer .footer-inner { padding-bottom: 28px !important; }
 .is-phone .call-band { margin-top: 40px !important; }
 .is-phone .call-band > div { padding: 40px 0 !important; width: calc(100% - 40px) !important; grid-template-columns: minmax(0, 1fr) !important; gap: 32px !important; }
 .is-phone .call-band h2 { font-size: 21px !important; margin-bottom: 18px !important; }
-.is-phone .call-band .cb-num { font-size: 32px !important; }
-.is-phone .call-band .cb-btns > * { flex: 1 1 0; padding: 14px 10px !important; font-size: 15px !important; }
+.is-phone .call-band .cb-num { font-size: 28px !important; }
+.is-phone .call-band .cb-grid > div:first-child { width: 100%; }
+.is-phone .call-band .cb-grid > div:first-child > div:first-child { font-size: 20px !important; letter-spacing: -0.6px !important; }
+.is-phone .call-band .cb-grid > div:first-child > div:nth-child(2) { font-size: 13.5px !important; margin-bottom: 16px !important; }
+.is-phone .call-band .cb-grid > div:first-child > div:nth-child(3) { font-size: 13px !important; margin-bottom: 4px !important; }
+.is-phone .call-band .cb-grid > div:first-child > div:nth-child(5) { font-size: 13px !important; margin-top: 6px !important; }
+.is-phone .call-band .cb-illust { display: block !important; width: 128px !important; right: 4px !important; bottom: 106px !important; }
+.is-phone .call-band .cb-btns > * { flex: 1 1 0; padding: 13px 10px !important; font-size: 14px !important; }
+.is-phone .call-band .cb-btns { margin-top: 20px !important; position: relative; z-index: 2; }
 .is-phone .call-band .cb-card { padding: 24px 22px !important; min-height: 0 !important; }
 .is-phone .call-band .cb-card > div:first-child > div:first-child { font-size: 18px !important; }
 .is-phone .call-band .cb-card > div:first-child > div:last-child { font-size: 13.5px !important; }
@@ -439,7 +492,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
   <a href="tel:1800-9774" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #2563eb; font-size: 26px; font-weight: 700;">
     <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>전화상담
   </a>
-  <button onClick="{{ notReady }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: none; border: none; color: #475569; font-size: 26px; font-weight: 600; font-family: inherit; cursor: pointer;">
+  <button onClick="{{ openKakao }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: none; border: none; color: #475569; font-size: 26px; font-weight: 600; font-family: inherit; cursor: pointer;">
     <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>카톡상담
   </button>
   <a href="#/self" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #475569; font-size: 26px; font-weight: 600;">
@@ -456,7 +509,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
     <button onClick="{{ openSubsidy }}" title="지원금 확인하기" aria-label="지원금 확인하기" style="width: 40px; height: 40px; border: none; border-radius: 8px; background: #eef3fc; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;" style-hover="background: #e1e9fa;">
       <span style="width: 22px; height: 22px; border-radius: 999px; background: #4167f6; color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; line-height: 1;">₩</span>
     </button>
-    <button onClick="{{ notReady }}" title="카카오톡 상담" aria-label="카카오톡 상담" style="width: 40px; height: 40px; border: none; border-radius: 8px; background: #fee500; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;" style-hover="background: #f5dc00;">
+    <button onClick="{{ openKakao }}" title="카카오톡 상담" aria-label="카카오톡 상담" style="width: 40px; height: 40px; border: none; border-radius: 8px; background: #fee500; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;" style-hover="background: #f5dc00;">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="#191919"><path d="M12 3C6.48 3 2 6.48 2 10.78c0 2.77 1.85 5.2 4.64 6.58l-.95 3.48c-.08.3.26.54.52.37l4.15-2.74c.54.06 1.08.09 1.64.09 5.52 0 10-3.48 10-7.78S17.52 3 12 3z"></path></svg>
     </button>
     <button onClick="{{ goSelf }}" title="셀프 진단" aria-label="셀프 진단" style="width: 40px; height: 40px; border: none; border-radius: 8px; background: #eef3fc; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; color: #334155;" style-hover="background: #e1e9fa;">
@@ -478,7 +531,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
         </span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; opacity: 0.85;"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
       </button>
-      <button onClick="{{ notReady }}" style="width: 100%; display: flex; align-items: center; gap: 10px; background: #fee500; color: #191919; border: none; padding: 12px 12px 12px 13px; border-radius: 8px; cursor: pointer; text-align: left; font-family: inherit;" style-hover="background: #f5dc00;">
+      <button onClick="{{ openKakao }}" style="width: 100%; display: flex; align-items: center; gap: 10px; background: #fee500; color: #191919; border: none; padding: 12px 12px 12px 13px; border-radius: 8px; cursor: pointer; text-align: left; font-family: inherit;" style-hover="background: #f5dc00;">
         <span style="min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px;">
           <span style="font-size: 11px; font-weight: 400; color: rgba(25,25,25,0.7); letter-spacing: -0.3px;">지금 바로, 실시간으로</span>
           <span style="font-size: 14.5px; font-weight: 700; letter-spacing: -0.4px;">카카오톡 상담</span>
@@ -648,7 +701,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
       <div class="popular-plans-grid plans-swipe home-plans-swipe" ref="{{ plansRef }}" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
         <sc-for list="{{ plans }}" as="plan" hint-placeholder-count="3">
           <div class="popular-plan-card" onClick="{{ plan.onClick }}" style="background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; display: flex; flex-direction: column; position: relative; padding: 24px 22px 22px; cursor: pointer; transition: border-color 0.15s ease;" style-hover="border-color: #2563eb;">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 30px; margin-bottom: 18px;">
               <span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; background: #2563eb; color: #ffffff; font-size: 13px; font-weight: 700; letter-spacing: -0.3px; border-radius: 4px; white-space: nowrap;">{{ plan.badge }}</span>
               <img src="{{ plan.networkImg }}" alt="{{ plan.network }}" style="{{ plan.logoStyle }}" loading="lazy" decoding="async" />
             </div>
@@ -686,7 +739,6 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
           <div class="input-row">
             <input type="text" placeholder="이름 (선택)" value="{{ homeName }}" onChange="{{ setHomeName }}" />
             <div class="req-wrapper">
-              <span class="req-badge">필수입력</span>
               <input type="text" placeholder="연락처 입력 (필수)" class="req-input" value="{{ homePhone }}" onChange="{{ setHomePhone }}" />
             </div>
           </div>
@@ -704,7 +756,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
 
       <div style="background: #f4f6fc; border: 1px solid #e8ecf6; border-radius: 16px; padding: 26px 28px 18px; display: flex; flex-direction: column; box-shadow: none;">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 12px; margin-bottom: 14px;">
-          <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; white-space: nowrap;">실시간 접수 현황</h3>
+          <h3 class="live-t" style="margin: 0; font-size: 20px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; white-space: nowrap;">실시간 접수 현황</h3>
           <span style="font-size: 12.5px; font-weight: 600; color: #64748b; background: #f1f5f9; padding: 5px 11px; border-radius: 999px; white-space: nowrap;">{{ todayLabel }}</span>
         </div>
 
@@ -732,8 +784,8 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
 
     <div class="review-header" style="align-items: flex-end; margin-bottom: 24px;">
       <div>
-        <h3 style="font-size: 24px; font-weight: 700; margin: 0 0 8px 0; color: #1e293b; letter-spacing: -0.5px;">고객 설치 후기</h3>
-        <p style="margin: 0; color: #64748b; font-size: 15px;">올픽으로 설치하신 고객님들의 실제 후기예요</p>
+        <h3 class="rv-sec-t" style="font-size: 24px; font-weight: 700; margin: 0 0 8px 0; color: #1e293b; letter-spacing: -0.5px;">고객 설치 후기</h3>
+        <p class="rv-sec-s" style="margin: 0; color: #64748b; font-size: 15px;">올픽으로 설치하신 고객님들의 실제 후기예요</p>
       </div>
       <a href="#/reviews" style="font-size: 14px; color: #2563eb; font-weight: 600; white-space: nowrap;">더보기 &gt;</a>
     </div>
@@ -840,7 +892,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
   </div>
 
   <sc-if value="{{ moS0 }}" hint-placeholder-val="{{ true }}">
-    <h2 style="margin: 18px 0 4px; font-size: 21px; font-weight: 800; color: #0f172a; letter-spacing: -0.6px;">가입하실 통신사를 골라주세요</h2>
+    <h2 style="margin: 18px 0 4px; font-size: 21px; font-weight: 600; color: #0f172a; letter-spacing: -0.6px;">가입하실 통신사를 골라주세요</h2>
     <p style="margin: 0 0 20px; font-size: 14px; color: #8b95a1;">통신사별 요금과 혜택을 바로 보여드려요</p>
     <div style="display: flex; flex-direction: column; gap: 10px;">
       <sc-for list="{{ moCarriers }}" as="c" hint-placeholder-count="5">
@@ -919,7 +971,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
   </sc-if>
 
   <sc-if value="{{ moS2 }}" hint-placeholder-val="{{ false }}">
-    <h2 style="margin: 18px 0 18px; font-size: 21px; font-weight: 800; color: #0f172a; letter-spacing: -0.6px;">고르신 상품을 확인해주세요</h2>
+    <h2 style="margin: 18px 0 18px; font-size: 21px; font-weight: 600; color: #0f172a; letter-spacing: -0.6px;">고르신 상품을 확인해주세요</h2>
     <div style="background: #f7f8fa; border-radius: 16px; padding: 20px 20px 8px; margin-bottom: 12px;">
       <div style="font-size: 13.5px; color: #8b95a1; font-weight: 600; margin-bottom: 8px;">가입 상품</div>
       <sc-for list="{{ moSumInfo }}" as="r" hint-placeholder-count="4">
@@ -947,9 +999,9 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
 
   <div style="position: fixed; left: 0; right: 0; bottom: 60px; background: #ffffff; border-top: 1px solid #eef0f4; padding: 12px 20px 12px; z-index: 900; box-sizing: border-box;">
     <sc-if value="{{ moShowBar }}" hint-placeholder-val="{{ false }}">
-      <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px;">
-        <div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: #64748b;">예상 월 납부액</span><span style="color: #0f172a; font-weight: 800;">월 {{ moTotal }}원 <span style="font-weight: 500; color: #94a3b8; font-size: 11.5px;">(부가세 포함)</span></span></div>
-        <div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: #64748b;">현금사은품</span><span style="color: #2563eb; font-weight: 800;">{{ moCash }}원 <span style="font-weight: 600; color: #64748b; font-size: 11.5px;">+ 최대 비밀 혜택</span></span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 11px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 15px;"><span style="color: #475569; font-weight: 600; white-space: nowrap;">예상 월 납부액</span><span style="color: #0f172a; font-size: 18px; font-weight: 800; white-space: nowrap;">월 {{ moTotal }}원 <span style="font-weight: 500; color: #64748b; font-size: 12.5px;">(부가세 포함)</span></span></div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 15px;"><span style="color: #475569; font-weight: 600; white-space: nowrap;">현금사은품</span><span style="color: #2563eb; font-size: 18px; font-weight: 800; white-space: nowrap;">{{ moCash }}원 <span style="font-weight: 600; color: #64748b; font-size: 12.5px;">+ 최대 비밀 혜택</span></span></div>
       </div>
     </sc-if>
     <button onClick="{{ moNext }}" style="{{ moNextStyle }}">{{ moNextLabel }}</button>
@@ -1283,15 +1335,15 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
 </sc-if>
 
 <sc-if value="{{ isSelf }}" hint-placeholder-val="{{ false }}">
-<main class="container" style="max-width: 640px; margin: 0 auto; padding: 44px 0 110px;" data-screen-label="셀프진단">
-  <div style="margin-bottom: 26px;">
+<main class="container self-page" style="max-width: 640px; margin: 0 auto; padding: 44px 0 110px;" data-screen-label="셀프진단">
+  <div class="self-intro" style="margin-bottom: 26px;">
     <div style="font-size: 13px; font-weight: 700; color: #2563eb; letter-spacing: 0.4px; margin-bottom: 8px;">셀프진단</div>
     <h1 style="margin: 0 0 8px; font-size: 27px; font-weight: 700; color: #0f172a; letter-spacing: -0.8px; line-height: 1.35; word-break: keep-all;">몇 가지만 답하면 조건에 맞는 상품을 찾아드려요</h1>
     <p style="margin: 0; font-size: 15px; color: #64748b;">1분이면 끝나고, 상담 없이 바로 결과를 보실 수 있습니다</p>
   </div>
-  <div style="border: 1px solid #e8ecf2; border-radius: 18px; padding: 26px 26px 22px; background: #fff; box-shadow: 0 1px 2px rgba(16,24,40,0.04);">
+  <div class="self-card" style="border: 1px solid #e8ecf2; border-radius: 18px; padding: 26px 26px 22px; background: #fff; box-shadow: 0 1px 2px rgba(16,24,40,0.04);">
 
-    <div style="background: #f8fafc; border-radius: 12px; padding: 14px 16px; margin-bottom: 24px;">
+    <div class="self-progress" style="background: #f8fafc; border-radius: 12px; padding: 14px 16px; margin-bottom: 24px;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px;">
         <span style="font-size: 13px; color: #64748b; font-weight: 600;">{{ quizRemain }}</span>
         <span style="font-size: 15px; color: #2563eb; font-weight: 700;">{{ quizPct }}</span>
@@ -1301,7 +1353,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
       </div>
     </div>
 
-    <div style="display: flex; align-items: flex-start; gap: 11px; margin-bottom: 20px;">
+    <div class="self-q" style="display: flex; align-items: flex-start; gap: 11px; margin-bottom: 20px;">
       <span style="flex-shrink: 0; width: 26px; height: 26px; border-radius: 7px; background: #0f172a; color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px;">{{ quizNo }}</span>
       <div style="min-width: 0;">
         <h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; line-height: 1.4; word-break: keep-all;">{{ quizQuestion }}</h3>
@@ -1312,7 +1364,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
     </div>
 
     <sc-if value="{{ quizIsCarrier }}" hint-placeholder-val="{{ true }}">
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+      <div class="self-carriers" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
         <sc-for list="{{ quizOptions }}" as="o" hint-placeholder-count="5">
           <div onClick="{{ o.pick }}" style="{{ o.card }}">
             <sc-if value="{{ o.badge }}" hint-placeholder-val="{{ false }}">
@@ -1433,7 +1485,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
       </sc-for>
     </div>
 
-    <div style="display: flex; gap: 9px; margin-top: 22px;">
+    <div class="self-nav" style="display: flex; gap: 9px; margin-top: 22px;">
       <button onClick="{{ quizBack }}" style="{{ quizBackBtn }}">이전</button>
       <button onClick="{{ quizNext }}" style="{{ quizNextBtn }}">{{ quizNextLabel }}</button>
     </div>
@@ -1516,9 +1568,9 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
 </sc-if>
 
 <sc-if value="{{ isEvents }}" hint-placeholder-val="{{ false }}">
-<main class="container" style="max-width: 1140px; margin: 0 auto; padding: 44px 0 100px;" data-screen-label="이벤트">
-  <div style="margin-bottom: 30px;">
-    <h1 style="font-size: 28px; font-weight: 700; color: #0f172a; margin: 0 0 8px; letter-spacing: -0.8px;">이벤트</h1>
+<main class="container ev-page" style="max-width: 940px; margin: 0 auto; padding: 56px 0 110px;" data-screen-label="이벤트">
+  <div class="ev-head" style="text-align: center; margin-bottom: 44px;">
+    <h1 style="font-size: 30px; font-weight: 700; color: #0f172a; margin: 0 0 12px; letter-spacing: -0.9px;">이벤트</h1>
     <p style="margin: 0; font-size: 15px; color: #64748b;">진행 중인 혜택과 이벤트를 확인하세요</p>
   </div>
 
@@ -1770,7 +1822,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
 
   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 12px; flex-wrap: wrap;">
     <span style="font-size: 15px; font-weight: 600; color: #334155;">전체 <span style="color: #2563eb;">{{ qTotal }}</span>건</span>
-    <button onClick="{{ openQWrite }}" style="display: inline-flex; align-items: center; gap: 7px; background: #2563eb; color: #fff; border: none; padding: 13px 22px; border-radius: 10px; font-size: 14.5px; font-weight: 700; cursor: pointer;">
+    <button class="bd-write" onClick="{{ openQWrite }}" style="display: inline-flex; align-items: center; gap: 7px; background: #2563eb; color: #fff; border: none; padding: 13px 22px; border-radius: 10px; font-size: 14.5px; font-weight: 700; cursor: pointer;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
       질문 작성하기
     </button>
@@ -1832,7 +1884,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
 
   <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1.5px solid #0f172a;">
     <span style="font-size: 15px; font-weight: 600; color: #334155;">전체 <span style="color: #2563eb;">{{ rTotal }}</span>건</span>
-    <button onClick="{{ openRWrite }}" style="display: inline-flex; align-items: center; gap: 7px; background: #2563eb; color: #fff; border: none; padding: 13px 22px; border-radius: 10px; font-size: 14.5px; font-weight: 700; cursor: pointer;">
+    <button class="bd-write" onClick="{{ openRWrite }}" style="display: inline-flex; align-items: center; gap: 7px; background: #2563eb; color: #fff; border: none; padding: 13px 22px; border-radius: 10px; font-size: 14.5px; font-weight: 700; cursor: pointer;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
       후기 작성하기
     </button>
@@ -2127,12 +2179,15 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
     </sc-for>
   </div>
 
-  <div onClick="{{ openModal }}" style="background: linear-gradient(105deg, #1e3a8a 0%, #1d4ed8 62%, #2563eb 100%); border-radius: 16px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; cursor: pointer; flex-wrap: wrap;">
-    <div style="word-break: keep-all;">
-      <h3 style="margin: 0 0 6px; font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.6px;">내가 받을 수 있는 혜택은?</h3>
-      <p style="margin: 0; font-size: 15px; color: #e2ecff;">통신사별 조건을 비교해 안내해 드려요.</p>
+  <div class="ev-cta" onClick="{{ openModal }}" style="display: flex; align-items: center; gap: 22px; background: #ffffff; border: 1.5px solid #dbe6fb; border-radius: 18px; padding: 24px 30px; cursor: pointer;">
+    <span class="ev-cta-tile" style="flex-shrink: 0; width: 76px; height: 76px; border-radius: 20px; background: #eaf2ff; display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 96 116" aria-hidden="true" style="width: 50px; height: auto; display: block;"><rect x="4" y="4" width="88" height="108" rx="16" fill="#2f6bf0"></rect><rect x="16" y="16" width="64" height="24" rx="6" fill="#dbe8ff"></rect><rect x="52" y="24" width="20" height="8" rx="3" fill="#2f6bf0"></rect><rect x="16" y="50" width="16" height="14" rx="4" fill="#a9c6ff"></rect><rect x="40" y="50" width="16" height="14" rx="4" fill="#a9c6ff"></rect><rect x="64" y="50" width="16" height="14" rx="4" fill="#ffc94d"></rect><rect x="16" y="70" width="16" height="14" rx="4" fill="#a9c6ff"></rect><rect x="40" y="70" width="16" height="14" rx="4" fill="#a9c6ff"></rect><rect x="64" y="70" width="16" height="14" rx="4" fill="#ffc94d"></rect><rect x="16" y="90" width="16" height="12" rx="4" fill="#a9c6ff"></rect><rect x="40" y="90" width="16" height="12" rx="4" fill="#a9c6ff"></rect><rect x="64" y="90" width="16" height="12" rx="4" fill="#ffc94d"></rect></svg>
+    </span>
+    <div class="ev-cta-txt" style="flex: 1; min-width: 0; word-break: keep-all;">
+      <h3 style="margin: 0 0 5px; font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.6px; line-height: 1.3;">내가 받을 수 있는 혜택은?</h3>
+      <p style="margin: 0; font-size: 14.5px; color: #64748b; letter-spacing: -0.2px; line-height: 1.45;">통신사별 조건을 비교해 안내해 드려요.</p>
     </div>
-    <button style="background: #fff; color: #1d4ed8; border: none; padding: 15px 28px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; white-space: nowrap;">최대 혜택 확인하기</button>
+    <button class="ev-cta-btn" style="flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 7px; background: #2563eb; color: #fff; border: none; padding: 14px 22px; border-radius: 10px; font-size: 15px; font-weight: 700; letter-spacing: -0.3px; font-family: inherit; cursor: pointer; white-space: nowrap;" style-hover="background: #1d4ed8;">최대 혜택 확인하기<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></button>
   </div>
 </main>
 </sc-if>
@@ -3097,7 +3152,7 @@ const QUIZ = [
     key: 'carrier', layout: 'carrier', multi: true, required: true,
     q: '가입을 고려하시는 통신사를 모두 골라주세요',
     opts: [
-      { v: 'kt', label: '케이티', tags: '#안정적인속도 #전국설치망', img: 'images/KT-trim.png', h: 26 },
+      { v: 'kt', label: 'KT', tags: '#안정적인속도 #전국설치망', img: 'images/KT-trim.png', h: 26 },
       { v: 'lg', label: 'LG유플러스', tags: '#TV콘텐츠강점 #스마트홈연동', img: 'images/LG-trim.png', h: 23 },
       { v: 'sk', label: 'SK브로드밴드', tags: '#SKT결합혜택 #Btv콘텐츠', img: 'images/SK-trim.png', h: 34 },
       { v: 'skylife', label: 'KT스카이라이프', tags: '#낮은월요금 #KT망사용', img: 'images/SKYLIFE-trim.png', h: 20, badge: '알뜰' },
@@ -3298,7 +3353,7 @@ class Component extends DCLogic {
     tvId: 'kt_tv_basic',
     discountId: 'kt_dis_total',
     usimOption: 'no',
-    bannerOpen: window.innerWidth >= 1120,
+    bannerOpen: window.innerWidth >= 1560,
     isMobile: window.innerWidth <= 800,
     winW: window.innerWidth,
     modalOpen: false,
@@ -3464,13 +3519,21 @@ class Component extends DCLogic {
       if (phoneVp) {
         const fit = () => {
           const a = Math.min(screen.width, screen.height), b = Math.max(screen.width, screen.height);
-          const s = ((window.innerWidth > window.innerHeight ? b : a) / 480).toFixed(4);
-          const base = 'width=480, initial-scale=' + s;
+          const s = ((window.innerWidth > window.innerHeight ? b : a) / 430).toFixed(4);
+          const base = 'width=430, initial-scale=' + s;
           vp.setAttribute('content', base + ', maximum-scale=' + s);
           setTimeout(() => vp.setAttribute('content', base), 400);
         };
         fit();
         window.addEventListener('orientationchange', () => setTimeout(fit, 200));
+        const navHint = () => {
+          const n = document.querySelector('.hdr-left nav.head-links');
+          if (!n) return;
+          document.documentElement.classList.toggle('nav-end', n.scrollLeft + n.clientWidth >= n.scrollWidth - 4);
+        };
+        document.addEventListener('scroll', navHint, true);
+        window.addEventListener('resize', navHint);
+        setTimeout(navHint, 600);
       } else {
         vp.setAttribute('content', 'width=1136');
       }
@@ -3510,7 +3573,7 @@ class Component extends DCLogic {
 
     this._slideTimer = setInterval(() => {
       this.setState(s => ({ slide: SLIDE_ORDER[(SLIDE_ORDER.indexOf(s.slide) + 1) % SLIDE_ORDER.length] }));
-    }, 5000);
+    }, 4000);
 
     this._liveTimer = setInterval(() => {
       this.setState(s => ({
@@ -4965,7 +5028,7 @@ class Component extends DCLogic {
     if (this._slideTimer) clearInterval(this._slideTimer);
     this._slideTimer = setInterval(() => {
       this.setState(s => ({ slide: SLIDE_ORDER[(SLIDE_ORDER.indexOf(s.slide) + 1) % n] }));
-    }, 5000);
+    }, 4000);
   }
 
   stepSlide(dir) {
@@ -4994,7 +5057,7 @@ class Component extends DCLogic {
       key: i === curI ? 'on-' + cur + '-' + (this.state.slideNav || 0) : 'off',
       style: { position: 'absolute', left: 0, top: 0, bottom: 0, display: 'block', background: fill, borderRadius: '2px',
         width: i < curI ? '0%' : (i === curI ? undefined : '0%'),
-        animation: i === curI ? 'hero-fill 5s linear forwards' : 'none' }
+        animation: i === curI ? 'hero-fill 4s linear forwards' : 'none' }
     })))));
   }
 
@@ -5206,7 +5269,7 @@ class Component extends DCLogic {
       },
       bannerChevron: this.state.bannerOpen ? 'm9 18 6-6-6-6' : 'm15 18-6-6 6-6',
       toggleBanner: () => this.setState(s => ({ bannerOpen: !s.bannerOpen })),
-      notReady: () => alert('준비 중인 기능입니다.'),
+      openKakao: () => { window.open('https://pf.kakao.com/_qFxiWX', '_blank', 'noopener'); },
       hideImg: (e) => { e.currentTarget.style.display = 'none'; },
       homeName: this.state.homeName || '',
       homePhone: this.state.homePhone || '',
