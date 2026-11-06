@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){try{var a=Math.min(screen.width,screen.height),b=Math.max(screen.width,screen.height);if(!(/[?&]m=1/.test(location.search)||(a<=600&&navigator.maxTouchPoints>0)))return;var w=window.innerWidth>window.innerHeight?b:a,v=document.querySelector('meta[name="viewport"]');if(v)v.setAttribute('content','width=480, initial-scale='+(w/480).toFixed(4));}catch(e){}})();</script>
 <script>document.documentElement.className+=" js"</script>
 <style>.js #seo-static{display:none}</style>
 <link rel="preload" as="image" href="images/main.webp" fetchpriority="high">
@@ -3460,7 +3461,19 @@ class Component extends DCLogic {
       let vp = document.querySelector('meta[name="viewport"]');
       if (!vp) { vp = document.createElement('meta'); vp.name = 'viewport'; document.head.appendChild(vp); }
       const phoneVp = /[?&]m=1/.test(location.search) || (Math.min(screen.width, screen.height) <= 600 && navigator.maxTouchPoints > 0);
-      vp.setAttribute('content', phoneVp ? 'width=480' : 'width=1136');
+      if (phoneVp) {
+        const fit = () => {
+          const a = Math.min(screen.width, screen.height), b = Math.max(screen.width, screen.height);
+          const s = ((window.innerWidth > window.innerHeight ? b : a) / 480).toFixed(4);
+          const base = 'width=480, initial-scale=' + s;
+          vp.setAttribute('content', base + ', maximum-scale=' + s);
+          setTimeout(() => vp.setAttribute('content', base), 400);
+        };
+        fit();
+        window.addEventListener('orientationchange', () => setTimeout(fit, 200));
+      } else {
+        vp.setAttribute('content', 'width=1136');
+      }
     } catch (e) {}
     try {
       const phone = /[?&]m=1/.test(location.search) || (Math.min(screen.width, screen.height) <= 600 && navigator.maxTouchPoints > 0);
