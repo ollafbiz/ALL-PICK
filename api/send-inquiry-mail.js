@@ -3,34 +3,6 @@ const nodemailer = require('nodemailer');
 const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const str = (v) => (v == null ? '' : String(v));
 
-// 사무실 관리자 서버로 접수 전달 (OLLAF_API_URL 미설정 시 건너뜀)
-async function forwardToOffice(b, phoneHyphen) {
-  const url = process.env.OLLAF_API_URL;
-  if (!url) return { skipped: true };
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), 8000);
-  try {
-    const r = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Ollaf-Key': process.env.OLLAF_API_KEY || 'ollaf-homepage-2026' },
-      body: JSON.stringify({
-        name: str(b.name),
-        phone: phoneHyphen,
-        carrier: str(b.carrier),
-        serviceType: str(b.serviceType || b.source || '상담신청'),
-        serviceDetail: str(b.serviceDetail || b.interest || '(선택 상품 없음)'),
-        memo: str(b.memo),
-        site: 'allpick'
-      }),
-      signal: ctrl.signal
-    });
-    return { ok: r.ok, status: r.status };
-  } catch (e) {
-    console.error('office api error', e && e.message);
-    return { ok: false, error: e && e.message };
-  } finally { clearTimeout(timer); }
-}
-
 async function sendMail(b, phoneHyphen) {
   const user = process.env.GMAIL_USER;
   const pass = process.env.GMAIL_APP_PASSWORD;
@@ -62,6 +34,7 @@ module.exports = async function handler(req, res) {
   if (b.consent !== true) return res.status(400).json({ success: false, error: 'consent required' });
   const phoneHyphen = phone.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 
-  const [mail, office] = await Promise.all([sendMail(b, phoneHyphen), forwardToOffice(b, phoneHyphen)]);
-  return res.status(mail.ok || office.ok ? 200 : 500).json({ success: !!(mail.ok || office.ok), mail, office });
+  // 메일만 보냄 (올라프 사무실 서버 전달 중단 — 접수 데이터는 allpick-43f78 Firestore에 저장)
+  const mail = await sendMail(b, phoneHyphen);
+  return res.status(mail.ok ? 200 : 500).json({ success: !!mail.ok, mail });
 };

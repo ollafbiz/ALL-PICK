@@ -69,8 +69,7 @@ export async function addEntry(name, payload) {
   clean.content = String(clean.content || '').slice(0, name === 'reviews' ? 5000 : 2000);
   const write = fs.addDoc(fs.collection(db, name), Object.assign(clean, {
     site: SITE,
-    createdAt: fs.serverTimestamp(),
-    views: 0
+    createdAt: fs.serverTimestamp()
   }));
   return await Promise.race([
     write.then(ref => ref.id),
@@ -152,10 +151,7 @@ export async function addConsult(payload) {
 }
 
 export async function bumpViews(name, id, current) {
-  try {
-    const { fs, adminDb: db } = await load();
-    await fs.updateDoc(fs.doc(db, name, id), { views: (current || 0) + 1 });
-  } catch (e) {}
+  // 조회수는 저장하지 않음 (규칙에서 views 필드 차단)
 }
 
 export async function replyTo(name, id, text) {
