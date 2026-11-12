@@ -1,11 +1,13 @@
 const CFG = {
-  apiKey: "AIzaSyBBe_bBWdzqHm341U5QspxM413XMXvK-7o",
-  authDomain: "gen-lang-client-0652554137.firebaseapp.com",
-  projectId: "gen-lang-client-0652554137",
-  storageBucket: "gen-lang-client-0652554137.firebasestorage.app",
-  messagingSenderId: "771974106359",
-  appId: "1:771974106359:web:2b9312d69acf3f9967d7f2"
+  apiKey: "AIzaSyCoFzuFZ-P6-__pBhoIvN0Vb8DGOnEIUOk",
+  authDomain: "allpick-43f78.firebaseapp.com",
+  projectId: "allpick-43f78",
+  storageBucket: "allpick-43f78.firebasestorage.app",
+  messagingSenderId: "322141661314",
+  appId: "1:322141661314:web:0d79be5b0f079ec30aec9b",
+  measurementId: "G-V211PX16TY"
 };
+// 올픽 전용 Firebase 프로젝트(allpick-43f78), 데이터베이스는 (default)
 
 const ADMIN_EMAILS = ['ollafbiz@gmail.com'];
 const SITE = 'allpick';
@@ -20,7 +22,7 @@ async function load() {
     import(`https://www.gstatic.com/firebasejs/${V}/firebase-auth.js`)
   ]);
   const instance = app.getApps().length ? app.getApp() : app.initializeApp(CFG);
-  mods = { fs, auth, db: fs.getFirestore(instance), adminDb: fs.getFirestore(instance, 'ai-studio-17a97ac4-a769-4c9a-b823-6bda3b219e41'), authInstance: auth.getAuth(instance) };
+  mods = { fs, auth, db: fs.getFirestore(instance), adminDb: fs.getFirestore(instance), authInstance: auth.getAuth(instance) };
   return mods;
 }
 
@@ -32,7 +34,7 @@ function toMs(v) {
   return isNaN(t) ? Date.now() : t;
 }
 
-// 게시판도 관리자 DB 사용 (기본 DB는 이 프로젝트에 없어 응답이 없음). 올라프 글과 섞이지 않게 site로 구분
+// 게시판: allpick-43f78 (default) DB. site 값으로 올픽 글만 표시
 export async function fetchCollection(name) {
   const { fs, adminDb: db } = await load();
   const snap = await fs.getDocs(fs.query(fs.collection(db, name), fs.where('site', '==', SITE)));
@@ -67,8 +69,7 @@ export async function addEntry(name, payload) {
   clean.content = String(clean.content || '').slice(0, name === 'reviews' ? 5000 : 2000);
   const write = fs.addDoc(fs.collection(db, name), Object.assign(clean, {
     site: SITE,
-    createdAt: fs.serverTimestamp(),
-    views: 0
+    createdAt: fs.serverTimestamp()
   }));
   return await Promise.race([
     write.then(ref => ref.id),
@@ -76,28 +77,7 @@ export async function addEntry(name, payload) {
   ]);
 }
 
-// ===== 상담 접수: 올픽 전용 Firebase(allpick-43f78) 'consultations'에 저장 =====
-// 게시판(질문답변·후기)은 위의 기존 DB를 그대로 사용
-const CONSULT_CFG = {
-  apiKey: "AIzaSyCoFzuFZ-P6-__pBhoIvN0Vb8DGOnEIUOk",
-  authDomain: "allpick-43f78.firebaseapp.com",
-  projectId: "allpick-43f78",
-  storageBucket: "allpick-43f78.firebasestorage.app",
-  messagingSenderId: "322141661314",
-  appId: "1:322141661314:web:0d79be5b0f079ec30aec9b"
-};
-let consultMods = null;
-async function loadConsult() {
-  if (consultMods) return consultMods;
-  const [app, fs] = await Promise.all([
-    import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`),
-    import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`)
-  ]);
-  const inst = app.getApps().find(x => x.name === 'allpick') || app.initializeApp(CONSULT_CFG, 'allpick');
-  consultMods = { fs, db: fs.getFirestore(inst) };
-  return consultMods;
-}
-
+// ===== 상담 접수: allpick-43f78 (default) DB의 'consultations'에 저장 =====
 // 광고 클릭값은 첫 방문 주소에만 붙으므로 처음 본 값을 기억해 둠
 const TRACK_KEYS = ['utm_source', 'nclid', 'gclid'];
 function remember() {
@@ -161,7 +141,7 @@ export async function addConsult(payload) {
   } catch (e) { console.warn('mail api', e); }
 
   // 2) Firestore 저장 (allpick-43f78). 최대 8초만 기다리고, 이후엔 SDK가 재시도
-  const { fs, db } = await loadConsult();
+  const { fs, db } = await load();
   const write = fs.addDoc(fs.collection(db, 'consultations'), Object.assign({}, data, { createdAt: fs.serverTimestamp() }));
   write.catch(e => console.error('consultations write', e && e.code, e && e.message));
   return await Promise.race([
@@ -171,10 +151,7 @@ export async function addConsult(payload) {
 }
 
 export async function bumpViews(name, id, current) {
-  try {
-    const { fs, adminDb: db } = await load();
-    await fs.updateDoc(fs.doc(db, name, id), { views: (current || 0) + 1 });
-  } catch (e) {}
+  // 조회수는 저장하지 않음 (규칙에서 views 필드 차단)
 }
 
 export async function replyTo(name, id, text) {

@@ -351,7 +351,7 @@ html.is-phone::-webkit-scrollbar, html.is-phone body::-webkit-scrollbar { displa
 .hero-wrap .sl-col .sl-sub, .bn .sl-col .sl-sub { font-size: 2.04cqw !important; line-height: 1.4 !important; margin-top: 0.71cqw !important; }
 .is-phone .hero-wrap .sl-col, .is-phone .bn .sl-col { width: 68% !important; padding-left: 5.5% !important; }
 .is-phone .hero-wrap .sl-col > .sl-t0, .is-phone .bn .sl-col .sl-t0 { gap: 1.32cqw !important; padding-bottom: 0.9cqw !important; }
-.is-phone .hero-wrap .sl-col .sl-lead, .is-phone .bn .sl-col .sl-lead { font-size: 4.3cqw !important; white-space: nowrap !important; }
+.is-phone .hero-wrap .sl-col .sl-lead, .is-phone .bn .sl-col .sl-lead { font-size: 3.55cqw !important; white-space: nowrap !important; }
 .is-phone .hero-wrap .sl-col .sl-big, .is-phone .bn .sl-col .sl-big { font-size: 6.82cqw !important; letter-spacing: -0.15cqw !important; line-height: 1.18 !important; white-space: nowrap !important; }
 .is-phone .hero-wrap .sl-col .sl-sub, .is-phone .bn .sl-col .sl-sub { font-size: 2.92cqw !important; letter-spacing: -0.08cqw !important; margin-top: 0.67cqw !important; white-space: nowrap !important; }
 
@@ -4266,7 +4266,7 @@ class Component extends DCLogic {
       this.syncFirestore();
     }).catch(e => console.error('review seed', e && e.message, e));
 
-    import(new URL('firebase-boards.js', document.baseURI).href).then(fb => {
+    import(new URL('firebase-boards.js?v=20261112b', document.baseURI).href).then(fb => {
       this._fb = fb;
       fb.watchAuth(u => this.setState({ authUser: u })).catch(() => {});
     }).catch(e => console.error('firebase load', e));
@@ -4320,12 +4320,12 @@ class Component extends DCLogic {
     if (!payload.sel) payload = Object.assign({}, payload, { sel: this.selectionFields() });
     const run = (fb) => fb.addConsult(payload).catch(e => console.error('consult', e));
     if (this._fb && this._fb.addConsult) { run(this._fb); return; }
-    import(new URL('firebase-boards.js', document.baseURI).href).then(fb => { this._fb = fb; run(fb); }).catch(fail);
+    import(new URL('firebase-boards.js?v=20261112b', document.baseURI).href).then(fb => { this._fb = fb; run(fb); }).catch(fail);
   }
 
   syncFirestore() {
     if (!this._fb) {
-      import(new URL('firebase-boards.js', document.baseURI).href).then(fb => { this._fb = fb; this.syncFirestore(); }).catch(() => {});
+      import(new URL('firebase-boards.js?v=20261112b', document.baseURI).href).then(fb => { this._fb = fb; this.syncFirestore(); }).catch(() => {});
       return;
     }
     const norm = (o, kind) => ({
