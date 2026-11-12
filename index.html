@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script async src="https://www.googletagmanager.com/gtm.js?id=G-EX25GCX4Q9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){try{var a=Math.min(screen.width,screen.height),b=Math.max(screen.width,screen.height);if(!(/[?&]m=1/.test(location.search)||(a<=600&&navigator.maxTouchPoints>0)))return;var w=window.innerWidth>window.innerHeight?b:a,v=document.querySelector('meta[name="viewport"]');if(v)v.setAttribute('content','width=430, initial-scale='+(w/430).toFixed(4));}catch(e){}})();</script>
@@ -182,6 +189,9 @@ a:hover { color: #4167f6; }
 .is-phone .float-banner { display: none !important; }
 .mo-tabbar { display: none; }
 .is-phone .mo-tabbar { display: flex; }
+.mo-qbar { display: none; }
+.is-phone .mo-qbar { display: block; }
+.is-phone body:has(.mo-qbar) footer { padding-bottom: 146px !important; }
 .is-phone body { padding-bottom: 170px; }
 </style>
 <style>
@@ -501,19 +511,28 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
   <a href="#/" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #475569; font-size: 26px; font-weight: 600;">
     <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>홈
   </a>
-  <button onClick="{{ openSubsidy }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: none; border: none; color: #475569; font-size: 26px; font-weight: 600; font-family: inherit; cursor: pointer;">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>지원금 확인
-  </button>
-  <a href="tel:1800-9774" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #2563eb; font-size: 26px; font-weight: 700;">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>전화상담
+  <a href="#/self" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #475569; font-size: 26px; font-weight: 600;">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>셀프진단
   </a>
   <button onClick="{{ openKakao }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: none; border: none; color: #475569; font-size: 26px; font-weight: 600; font-family: inherit; cursor: pointer;">
     <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>카톡상담
   </button>
-  <a href="#/self" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #475569; font-size: 26px; font-weight: 600;">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>셀프진단
+  <a href="tel:1800-9774" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #2563eb; font-size: 26px; font-weight: 700;">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>전화상담
   </a>
 </nav>
+
+<sc-if value="{{ qbarShow }}" hint-placeholder-val="{{ false }}">
+<div class="mo-qbar" style="position: fixed; left: 0; right: 0; bottom: 60px; z-index: 899; background: #111a33; border-top: 1px solid #111a33; box-shadow: 0 -8px 20px rgba(17,26,51,0.28); padding: 10px 14px 8px; box-sizing: border-box;">
+  <button onClick="{{ qbarClose }}" aria-label="상담 배너 닫기" style="position: absolute; top: -36px; right: 12px; width: 28px; height: 28px; padding: 0; background: #111a33; border: 1.5px solid #3a4566; border-radius: 50%; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.25);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <input type="tel" inputmode="numeric" autocomplete="tel" placeholder="휴대폰 번호 입력" value="{{ qbarPhone }}" onChange="{{ setQbarPhone }}" style="flex: 1; min-width: 0; height: 44px; box-sizing: border-box; border: 1.5px solid #ffffff; border-radius: 10px; padding: 0 12px; font-size: 16px; font-family: inherit; color: #0f172a; outline: none; background: #ffffff;" />
+    <button onClick="{{ qbarSubmit }}" style="flex-shrink: 0; height: 44px; padding: 0 14px; border: none; border-radius: 10px; background: #3d7eff; color: #ffffff; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; white-space: nowrap;">무료 상담신청</button>
+    
+  </div>
+  <label style="display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 12px; color: #c7d2fe; cursor: pointer;"><input type="checkbox" checked="{{ qbarAgree }}" onChange="{{ setQbarAgree }}" style="width: 15px; height: 15px; margin: 0; accent-color: #3d7eff;" />개인정보 수집·이용 동의 (필수)<a href="#/privacy" style="margin-left: 2px; color: #9cc0ff; text-decoration: underline;">보기</a></label>
+</div>
+</sc-if>
 
 <div class="float-banner" style="{{ bannerWrap }}">
   <button onClick="{{ toggleBanner }}" aria-label="상담 배너 접기/펼치기" style="position: absolute; left: -24px; width: 24px; height: 44px; background: #ffffff; border: 1px solid #e9ecf1; border-right: none; border-radius: 8px 0 0 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: -4px 4px 12px rgba(0,0,0,0.04); color: #697386;">
@@ -3374,6 +3393,8 @@ class Component extends DCLogic {
     isMobile: window.innerWidth <= 800,
     winW: window.innerWidth,
     modalOpen: false,
+    qbarClosed: (() => { try { return sessionStorage.getItem('qbarClosed') === '1'; } catch (e) { return false; } })(),
+    qbarPhone: '',
     modalName: '',
     modalPhone: '',
     modalAgree: true,
@@ -5144,6 +5165,7 @@ class Component extends DCLogic {
     const isBoard = route === '/selfjoin' || route === '/self' || route === '/recommend' || route === '/terms' || route === '/privacy' || route === '/qna' || route === '/reviews' || route === '/qna/write' || route === '/reviews/write' || route === '/complaint' || route === '/support' || route === '/usim-guide' || /^\/review\//.test(route);
     const pendingKey = (isEvents || isEventDetail || isBoard) ? null : Object.keys(PAGE_TITLES).find(k => route === k || route.indexOf(k + '/') === 0);
     const isInternet = route === '/internet';
+    const qbarOn = !!this.state.isMobile && !this.state.qbarClosed && !this.state.modalOpen && !isInternet && route !== '/selfjoin';
 
     return Object.assign(this.internetVals(), this.boardVals(), {
       plansRef: this._plansRef || (this._plansRef = React.createRef()),
@@ -5156,7 +5178,7 @@ class Component extends DCLogic {
         try { navigator.clipboard.writeText('1800-9774'); } catch (err) {}
         this.setState({ pcCallCopied: true });
       },
-      footerPadBottom: (isInternet && this.state.inetCtaShown && !this.state.inetCtaHidden) ? '180px' : '0px',
+      footerPadBottom: (isInternet && this.state.inetCtaShown && !this.state.inetCtaHidden) ? '180px' : (qbarOn ? '86px' : '0px'),
       inetCtaVisible: !!this.state.inetCtaShown && !this.state.inetCtaHidden,
       goSelf: () => {
         this.setState({ quizStep: 0, quizSel: { product: 'tv', focus: 'popular', usim: 'no' } });
@@ -5169,7 +5191,20 @@ class Component extends DCLogic {
         this.setState({ inetCtaHidden: true });
       },
       isHome: route === '/' || (!pendingKey && !isInternet && !isEvents && !isEventDetail && !isBoard),
-      homeCtaShow: (route === '/' || (!pendingKey && !isInternet && !isEvents && !isEventDetail && !isBoard)) && !!this.state.homeCtaOn && !this.state.modalOpen,
+      homeCtaShow: (route === '/' || (!pendingKey && !isInternet && !isEvents && !isEventDetail && !isBoard)) && !!this.state.homeCtaOn && !this.state.modalOpen && !qbarOn,
+      qbarShow: qbarOn,
+      qbarPhone: this.state.qbarPhone || '',
+      qbarAgree: this.state.qbarAgree !== false,
+      setQbarPhone: (e) => this.setState({ qbarPhone: fmtPhone(e.target.value) }),
+      setQbarAgree: (e) => this.setState({ qbarAgree: e.target.checked }),
+      qbarClose: () => { try { sessionStorage.setItem('qbarClosed', '1'); } catch (e) {} this.setState({ qbarClosed: true }); },
+      qbarSubmit: () => {
+        const phone = (this.state.qbarPhone || '').trim();
+        if (!phone) { alert('휴대폰 번호를 입력해주세요.'); return; }
+        if (this.state.qbarAgree === false) { alert('개인정보 수집이용에 동의해주세요.'); return; }
+        this.submitConsult({ source: '모바일 하단 상담신청', name: '', phone, memo: '' }, '상담신청이 완료되었습니다. 곧 연락드리겠습니다.');
+        if (/^01[016789][0-9]{7,8}$/.test(phone.replace(/[^0-9]/g, ''))) { try { sessionStorage.setItem('qbarClosed', '1'); } catch (e) {} this.setState({ qbarPhone: '', qbarClosed: true }); }
+      },
       faqOpenIdx: this.state.faqOpen,
       homeFaqs: HOME_FAQ_Q.map((q, i) => {
         const f = FAQS_RAW.find(x => x.q === q) || { q, a: '' };
