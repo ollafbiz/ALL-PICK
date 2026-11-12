@@ -3403,7 +3403,7 @@ class Component extends DCLogic {
     isMobile: window.innerWidth <= 800,
     winW: window.innerWidth,
     modalOpen: false,
-    qbarClosed: (() => { try { return sessionStorage.getItem('qbarClosed') === '1'; } catch (e) { return false; } })(),
+    qbarClosed: false,
     qbarPhone: '',
     modalName: '',
     modalPhone: '',
@@ -3475,7 +3475,11 @@ class Component extends DCLogic {
       el.scrollTo({ left: ((i + 1) % n) * w, behavior: 'smooth' });
     }, 4000);
 
-    this._onHash = () => this.setState({ route: (location.hash || '#/').slice(1) || '/', inetCtaHidden: false, inetCtaShown: false, moStep: 0, moCarrierPicked: false });
+    this._onHash = () => {
+      const route = (location.hash || '#/').slice(1) || '/';
+      // 홈으로 돌아오면 하단 상담 배너를 다시 보여줌
+      this.setState(Object.assign({ route, inetCtaHidden: false, inetCtaShown: false, moStep: 0, moCarrierPicked: false }, route === '/' ? { qbarClosed: false } : {}));
+    };
     window.addEventListener('hashchange', this._onHash);
 
     const SEL = '.plans-swipe, .cards-swipe, .hdr-left nav.head-links';
@@ -5242,13 +5246,13 @@ class Component extends DCLogic {
       qbarAgree: this.state.qbarAgree !== false,
       setQbarPhone: (e) => this.setState({ qbarPhone: fmtPhone(e.target.value) }),
       setQbarAgree: (e) => this.setState({ qbarAgree: e.target.checked }),
-      qbarClose: () => { try { sessionStorage.setItem('qbarClosed', '1'); } catch (e) {} this.setState({ qbarClosed: true }); },
+      qbarClose: () => { this.setState({ qbarClosed: true }); },
       qbarSubmit: () => {
         const phone = (this.state.qbarPhone || '').trim();
         if (!phone) { alert('휴대폰 번호를 입력해주세요.'); return; }
         if (this.state.qbarAgree === false) { alert('개인정보 수집이용에 동의해주세요.'); return; }
         this.submitConsult({ source: '모바일 하단 상담신청', name: '', phone, memo: '' }, '상담신청이 완료되었습니다. 곧 연락드리겠습니다.');
-        if (/^01[016789][0-9]{7,8}$/.test(phone.replace(/[^0-9]/g, ''))) { try { sessionStorage.setItem('qbarClosed', '1'); } catch (e) {} this.setState({ qbarPhone: '', qbarClosed: true }); }
+        if (/^01[016789][0-9]{7,8}$/.test(phone.replace(/[^0-9]/g, ''))) { this.setState({ qbarPhone: '', qbarClosed: true }); }
       },
       faqOpenIdx: this.state.faqOpen,
       homeFaqs: HOME_FAQ_Q.map((q, i) => {
