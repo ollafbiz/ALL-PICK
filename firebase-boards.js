@@ -1,11 +1,13 @@
 const CFG = {
-  apiKey: "AIzaSyBBe_bBWdzqHm341U5QspxM413XMXvK-7o",
-  authDomain: "gen-lang-client-0652554137.firebaseapp.com",
-  projectId: "gen-lang-client-0652554137",
-  storageBucket: "gen-lang-client-0652554137.firebasestorage.app",
-  messagingSenderId: "771974106359",
-  appId: "1:771974106359:web:2b9312d69acf3f9967d7f2"
+  apiKey: "AIzaSyCoFzuFZ-P6-__pBhoIvN0Vb8DGOnEIUOk",
+  authDomain: "allpick-43f78.firebaseapp.com",
+  projectId: "allpick-43f78",
+  storageBucket: "allpick-43f78.firebasestorage.app",
+  messagingSenderId: "322141661314",
+  appId: "1:322141661314:web:0d79be5b0f079ec30aec9b",
+  measurementId: "G-V211PX16TY"
 };
+// 올픽 전용 Firebase 프로젝트(allpick-43f78), 데이터베이스는 (default)
 
 const ADMIN_EMAILS = ['ollafbiz@gmail.com'];
 const SITE = 'allpick';
@@ -20,7 +22,7 @@ async function load() {
     import(`https://www.gstatic.com/firebasejs/${V}/firebase-auth.js`)
   ]);
   const instance = app.getApps().length ? app.getApp() : app.initializeApp(CFG);
-  mods = { fs, auth, db: fs.getFirestore(instance), adminDb: fs.getFirestore(instance, 'ai-studio-17a97ac4-a769-4c9a-b823-6bda3b219e41'), authInstance: auth.getAuth(instance) };
+  mods = { fs, auth, db: fs.getFirestore(instance), adminDb: fs.getFirestore(instance), authInstance: auth.getAuth(instance) };
   return mods;
 }
 
@@ -32,7 +34,7 @@ function toMs(v) {
   return isNaN(t) ? Date.now() : t;
 }
 
-// 게시판도 관리자 DB 사용 (기본 DB는 이 프로젝트에 없어 응답이 없음). 올라프 글과 섞이지 않게 site로 구분
+// 게시판: allpick-43f78 (default) DB. site 값으로 올픽 글만 표시
 export async function fetchCollection(name) {
   const { fs, adminDb: db } = await load();
   const snap = await fs.getDocs(fs.query(fs.collection(db, name), fs.where('site', '==', SITE)));
@@ -76,59 +78,106 @@ export async function addEntry(name, payload) {
   ]);
 }
 
-const NOTIFY_TO = 'ollafmail@gmail.com';
+<<<<<<< HEAD
+// ===== 상담 접수: allpick-43f78 (default) DB의 'consultations'에 저장 =====
+=======
+// ===== 상담 접수: 올픽 전용 Firebase(allpick-43f78) 'consultations'에 저장 =====
+// 게시판(질문답변·후기)은 위의 기존 DB를 그대로 사용
+const CONSULT_CFG = {
+  apiKey: "AIzaSyCoFzuFZ-P6-__pBhoIvN0Vb8DGOnEIUOk",
+  authDomain: "allpick-43f78.firebaseapp.com",
+  projectId: "allpick-43f78",
+  storageBucket: "allpick-43f78.firebasestorage.app",
+  messagingSenderId: "322141661314",
+  appId: "1:322141661314:web:0d79be5b0f079ec30aec9b"
+};
+let consultMods = null;
+async function loadConsult() {
+  if (consultMods) return consultMods;
+  const [app, fs] = await Promise.all([
+    import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`),
+    import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`)
+  ]);
+  const inst = app.getApps().find(x => x.name === 'allpick') || app.initializeApp(CONSULT_CFG, 'allpick');
+  consultMods = { fs, db: fs.getFirestore(inst) };
+  return consultMods;
+}
+
+>>>>>>> 4562877aad03ae56ed8a2180efee19358b7515db
+// 광고 클릭값은 첫 방문 주소에만 붙으므로 처음 본 값을 기억해 둠
+const TRACK_KEYS = ['utm_source', 'nclid', 'gclid'];
+function remember() {
+  try {
+    const qs = new URLSearchParams(location.search);
+    TRACK_KEYS.forEach(k => { const v = qs.get(k); if (v) sessionStorage.setItem('ap_' + k, v.slice(0, 200)); });
+  } catch (e) {}
+}
+remember();
+function tracking(k) {
+  try { return new URLSearchParams(location.search).get(k) || sessionStorage.getItem('ap_' + k) || ''; } catch (e) { return ''; }
+}
+
+const CARRIER_NAME = { 'KT': 'KT', 'LG': 'LGU+', 'LG U+': 'LGU+', 'LGU+': 'LGU+', 'LG유플러스': 'LGU+', 'SK': 'SK', 'SKB': 'SK', 'SK브로드밴드': 'SK', 'LG헬로비전': '헬로비전', '헬로비전': '헬로비전', 'KT스카이라이프': '스카이라이프', '스카이라이프': '스카이라이프' };
 
 export async function addConsult(payload) {
-  // 상담은 관리자 사이트가 읽는 DB(올라프와 같은 DB)에 저장. 게시판은 기본 DB 유지
-  const { fs, adminDb: db } = await load();
-  const qs = new URLSearchParams(location.search);
   const phone = String(payload.phone || '').replace(/[^0-9]/g, '');
   if (!/^01[016789][0-9]{7,8}$/.test(phone)) throw new Error('invalid phone');
-  const message = [payload.memo, payload.detail ? '선택 조건: ' + payload.detail : ''].filter(Boolean).join('\n');
-  const data = {
-    name: String(payload.name || '').slice(0, 50),
-    phone: phone,
-    interest: String(payload.detail || payload.source || '상담신청').slice(0, 200),
-    message: message.slice(0, 2000),
-    source: payload.source || '',
-    pageUrl: location.href,
-    referrer: document.referrer || '',
-    utm_source: qs.get('utm_source') || '',
-    status: 'pending',
-    site: 'allpick',
-    createdAt: fs.serverTimestamp()
-  };
-  // 사무실 관리자 서버용 필드 (undefined 방지)
+  const sel = payload.sel || {};
   const detail = String(payload.detail || '').trim();
-  const head = detail.split('/')[0].trim();
-  const CARR = ['KT', 'SK', 'SKB', 'SK브로드밴드', 'LG', 'LG U+', 'LG유플러스', 'KT스카이라이프', '스카이라이프', 'LG헬로비전', '헬로비전'];
-  const office = {
-    phoneHyphen: phone.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3'),
-    carrier: CARR.indexOf(head) >= 0 ? head : (payload.carrier || ''),
-    serviceType: String(payload.source || '상담신청'),
-    serviceDetail: detail ? '[선택 상품]\n- ' + detail.split('/').map(s => s.trim()).filter(Boolean).join('\n- ') : '(선택 상품 없음)',
-    memo: String(payload.memo || '')
+  const parts = detail.split('/').map(s => s.trim()).filter(Boolean);
+  const head = parts.find(p => CARRIER_NAME[p]) || '';
+  const s = (v, n) => String(v == null ? '' : v).slice(0, n);
+  const message = [payload.memo, detail ? '선택 조건: ' + detail : ''].filter(Boolean).join('\n');
+
+  const data = {
+    name: s(payload.name, 50),
+    phone: phone,
+    carrier: s(CARRIER_NAME[sel.carrier] || sel.carrier || CARRIER_NAME[head] || payload.carrier || '', 20),
+    productCondition: s(sel.productCondition, 20),
+    internetSpeed: s(sel.internetSpeed, 50),
+    tvProduct: s(sel.tvProduct, 100),
+    bundleDiscount: s(sel.bundleDiscount, 100),
+    estimatedMonthly: s(sel.estimatedMonthly, 30),
+    message: s(message, 2000),
+    source: 'allpick',
+    formType: s(payload.source || '상담신청', 50),
+    pageUrl: s(location.href, 500),
+    referrer: s(document.referrer, 500),
+    utm_source: tracking('utm_source'),
+    nclid: tracking('nclid'),
+    gclid: tracking('gclid')
   };
 
-  // 1) 메일 알림 + 사무실 서버 전달 (Vercel 함수가 둘 다 처리)
+  // 1) 메일 알림 + 사무실 서버 전달 (기존과 동일, 병렬 실행·keepalive)
   try {
-    const body = Object.assign({}, data, office, { createdAt: undefined, consent: true });
+    const office = {
+      phoneHyphen: phone.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3'),
+      carrier: data.carrier,
+      serviceType: data.formType,
+      serviceDetail: detail ? '[선택 상품]\n- ' + parts.join('\n- ') : '(선택 상품 없음)',
+      interest: detail || data.formType,
+      memo: String(payload.memo || '')
+    };
     fetch('/api/send-inquiry-mail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify(Object.assign({}, data, office, { source: data.formType, consent: true })),
       keepalive: true
     }).catch(e => console.warn('mail api', e));
   } catch (e) { console.warn('mail api', e); }
 
-  // 2) Firestore 저장. 서버 응답이 늦어도 SDK가 대기열에 넣고 재시도하므로 화면은 8초 이상 붙잡지 않음
-  const write = fs.addDoc(fs.collection(db, 'consultations'), data);
-  const result = await Promise.race([
+  // 2) Firestore 저장 (allpick-43f78). 최대 8초만 기다리고, 이후엔 SDK가 재시도
+<<<<<<< HEAD
+  const { fs, db } = await load();
+=======
+  const { fs, db } = await loadConsult();
+>>>>>>> 4562877aad03ae56ed8a2180efee19358b7515db
+  const write = fs.addDoc(fs.collection(db, 'consultations'), Object.assign({}, data, { createdAt: fs.serverTimestamp() }));
+  write.catch(e => console.error('consultations write', e && e.code, e && e.message));
+  return await Promise.race([
     write.then(ref => ref.id),
     new Promise(r => setTimeout(() => r('queued'), 8000))
   ]);
-  write.catch(e => console.error('consultations write', e && e.code, e && e.message));
-  return result;
 }
 
 export async function bumpViews(name, id, current) {

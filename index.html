@@ -189,6 +189,9 @@ a:hover { color: #4167f6; }
 .is-phone .float-banner { display: none !important; }
 .mo-tabbar { display: none; }
 .is-phone .mo-tabbar { display: flex; }
+.mo-qbar { display: none; }
+.is-phone .mo-qbar { display: block; }
+.is-phone body:has(.mo-qbar) footer { padding-bottom: 146px !important; }
 .is-phone body { padding-bottom: 170px; }
 </style>
 <style>
@@ -339,8 +342,19 @@ html.is-phone::-webkit-scrollbar, html.is-phone body::-webkit-scrollbar { displa
 .is-phone .self-carriers span:last-child { font-size: 13px !important; white-space: nowrap; }
 .is-phone .self-nav { margin-top: 16px !important; }
 .is-phone .ev-page { padding-top: 16px !important; }
-.hero-wrap .sl-col > .sl-t0 { zoom: 1.1; padding-bottom: 6% !important; }
-.is-phone .hero-wrap .sl-col > .sl-t0 { padding-bottom: 12% !important; }
+/* ===== 메인 배너 · 이벤트 배너 공용 글자 배치 (여기 한 곳만 고치면 둘 다 바뀜) ===== */
+.hero-wrap, .bn { container-type: inline-size; }
+.hero-wrap .sl-col, .bn .sl-col { width: 58% !important; padding-left: 7% !important; }
+.hero-wrap .sl-col > .sl-t0, .bn .sl-col .sl-t0 { zoom: 1 !important; gap: 1.28cqw !important; padding-bottom: 0.8cqw !important; }
+.hero-wrap .sl-col .sl-lead, .bn .sl-col .sl-lead { font-size: 2.75cqw !important; font-weight: 600 !important; line-height: 1.3 !important; margin-bottom: 0 !important; }
+.hero-wrap .sl-col .sl-big, .bn .sl-col .sl-big { font-size: 5.7cqw !important; font-weight: 700 !important; letter-spacing: -0.15cqw !important; line-height: 1.15 !important; }
+.hero-wrap .sl-col .sl-sub, .bn .sl-col .sl-sub { font-size: 2.04cqw !important; line-height: 1.4 !important; margin-top: 0.71cqw !important; }
+.is-phone .hero-wrap .sl-col, .is-phone .bn .sl-col { width: 68% !important; padding-left: 5.5% !important; }
+.is-phone .hero-wrap .sl-col > .sl-t0, .is-phone .bn .sl-col .sl-t0 { gap: 1.32cqw !important; padding-bottom: 0.9cqw !important; }
+.is-phone .hero-wrap .sl-col .sl-lead, .is-phone .bn .sl-col .sl-lead { font-size: 4.3cqw !important; white-space: nowrap !important; }
+.is-phone .hero-wrap .sl-col .sl-big, .is-phone .bn .sl-col .sl-big { font-size: 6.82cqw !important; letter-spacing: -0.15cqw !important; line-height: 1.18 !important; white-space: nowrap !important; }
+.is-phone .hero-wrap .sl-col .sl-sub, .is-phone .bn .sl-col .sl-sub { font-size: 2.92cqw !important; letter-spacing: -0.08cqw !important; margin-top: 0.67cqw !important; white-space: nowrap !important; }
+
 .is-phone main.container { padding-bottom: 16px !important; }
 .is-phone .mo-inet { min-height: calc(100vh - 316px) !important; padding-bottom: 16px !important; }
 .is-phone .cards-swipe { flex-direction: column !important; overflow: visible !important; scroll-snap-type: none !important; gap: 12px !important; padding-bottom: 0 !important; }
@@ -399,7 +413,6 @@ footer .footer-inner { padding-bottom: 28px !important; }
 .is-phone .hdr-main .brand span { font-size: 26.5px !important; letter-spacing: -1.2px !important; line-height: 1 !important; }
 .is-phone .head-phone { padding: 8px 15px !important; font-size: 16.5px !important; gap: 7px !important; border-radius: 999px !important; transform: translateY(-50%) !important; top: 32px !important; }
 .is-phone .head-phone svg { width: 16px !important; height: 16px !important; }
-.is-phone .hero-wrap { container-type: inline-size; }
 @media (max-width: 860px) { .cb-illust { display: none !important; } }
 .is-phone .brand-logo { height: 26px !important; }
 .is-phone .call-band { margin-top: 40px !important; }
@@ -508,19 +521,28 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
   <a href="#/" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #475569; font-size: 26px; font-weight: 600;">
     <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>홈
   </a>
-  <button onClick="{{ openSubsidy }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: none; border: none; color: #475569; font-size: 26px; font-weight: 600; font-family: inherit; cursor: pointer;">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>지원금 확인
-  </button>
-  <a href="tel:1800-9774" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #2563eb; font-size: 26px; font-weight: 700;">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>전화상담
+  <a href="#/self" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #475569; font-size: 26px; font-weight: 600;">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>셀프진단
   </a>
   <button onClick="{{ openKakao }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: none; border: none; color: #475569; font-size: 26px; font-weight: 600; font-family: inherit; cursor: pointer;">
     <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>카톡상담
   </button>
-  <a href="#/self" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #475569; font-size: 26px; font-weight: 600;">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>셀프진단
+  <a href="tel:1800-9774" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #2563eb; font-size: 26px; font-weight: 700;">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>전화상담
   </a>
 </nav>
+
+<sc-if value="{{ qbarShow }}" hint-placeholder-val="{{ false }}">
+<div class="mo-qbar" style="position: fixed; left: 0; right: 0; bottom: 60px; z-index: 899; background: #111a33; border-top: 1px solid #111a33; box-shadow: 0 -8px 20px rgba(17,26,51,0.28); padding: 10px 14px 8px; box-sizing: border-box;">
+  <button onClick="{{ qbarClose }}" aria-label="상담 배너 닫기" style="position: absolute; top: -36px; right: 12px; width: 28px; height: 28px; padding: 0; background: #111a33; border: 1.5px solid #3a4566; border-radius: 50%; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.25);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <input type="tel" inputmode="numeric" autocomplete="tel" placeholder="휴대폰 번호 입력" value="{{ qbarPhone }}" onChange="{{ setQbarPhone }}" style="flex: 1; min-width: 0; height: 44px; box-sizing: border-box; border: 1.5px solid #ffffff; border-radius: 10px; padding: 0 12px; font-size: 16px; font-family: inherit; color: #0f172a; outline: none; background: #ffffff;" />
+    <button onClick="{{ qbarSubmit }}" style="flex-shrink: 0; height: 44px; padding: 0 14px; border: none; border-radius: 10px; background: #3d7eff; color: #ffffff; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; white-space: nowrap;">무료 상담신청</button>
+    
+  </div>
+  <label style="display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 12px; color: #c7d2fe; cursor: pointer;"><input type="checkbox" checked="{{ qbarAgree }}" onChange="{{ setQbarAgree }}" style="width: 15px; height: 15px; margin: 0; accent-color: #3d7eff;" />개인정보 수집·이용 동의 (필수)<a href="#/privacy" style="margin-left: 2px; color: #9cc0ff; text-decoration: underline;">보기</a></label>
+</div>
+</sc-if>
 
 <div class="float-banner" style="{{ bannerWrap }}">
   <button onClick="{{ toggleBanner }}" aria-label="상담 배너 접기/펼치기" style="position: absolute; left: -24px; width: 24px; height: 44px; background: #ffffff; border: 1px solid #e9ecf1; border-right: none; border-radius: 8px 0 0 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: -4px 4px 12px rgba(0,0,0,0.04); color: #697386;">
@@ -598,8 +620,8 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
       <div onClick="{{ pick1 }}" style="{{ slide1 }}">
         <img src="images/review-blue.webp" alt="가입후기 상품권 배너" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;" />
         <div class="sl-col" style="position: absolute; top: 0; left: 0; height: 100%; width: 58%; display: flex; flex-direction: column; padding-left: 7%; color: #1e293b; box-sizing: border-box; word-break: keep-all;">
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.9vw;">
-            <div class="sl-lead" style="font-size: min(24px, 2.2vw); font-weight: 600; opacity: 0.9; line-height: 1.3;">후기 한 줄 쓰면 신세계 상품권</div>
+          <div class="sl-t0" style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.9vw;">
+            <div class="sl-lead" style="font-size: min(24px, 2.2vw); font-weight: 600; opacity: 0.9; line-height: 1.3; margin-bottom: min(8px, 0.75vw);">후기 한 줄 쓰면 신세계 상품권</div>
             <div class="sl-big" style="font-size: min(56px, 5vw); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15;"><span style="color: #2563eb; font-size: 1.2em; font-weight: 800;">1만원</span> 전원 지급</div>
             <div class="sl-sub" style="font-size: min(20px, 1.9vw); font-weight: 500; opacity: 0.85; line-height: 1.4;">설치 사진과 함께 남겨주시면 바로 드려요</div>
           </div>
@@ -609,8 +631,8 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
       <div onClick="{{ pick4 }}" style="{{ slide4 }}">
         <img src="images/usim-bg-lavender.webp" alt="유심 변경 지원금 배너" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;" />
         <div class="sl-col" style="position: absolute; top: 0; left: 0; height: 100%; width: 58%; display: flex; flex-direction: column; padding-left: 7%; color: #1e293b; box-sizing: border-box; word-break: keep-all;">
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.9vw;">
-            <div class="sl-lead" style="font-size: min(24px, 2.2vw); font-weight: 600; opacity: 0.9; line-height: 1.3;">폰은 그대로, 유심만 바꾸면</div>
+          <div class="sl-t0" style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.9vw;">
+            <div class="sl-lead" style="font-size: min(24px, 2.2vw); font-weight: 600; opacity: 0.9; line-height: 1.3; margin-bottom: min(8px, 0.75vw);">폰은 그대로, 유심만 바꾸면</div>
             <div class="sl-big" style="font-size: min(56px, 5vw); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15;">최대 <span style="color: #2563eb; font-size: 1.2em; font-weight: 800;">30만원</span> 지원</div>
             <div class="sl-sub" style="font-size: min(20px, 1.9vw); font-weight: 500; opacity: 0.85; line-height: 1.4;">인터넷 결합할인까지 한 번에 챙기세요</div>
           </div>
@@ -620,8 +642,8 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
       <div onClick="{{ pick2 }}" style="{{ slide2 }}">
         <img src="images/refer-v5.webp" alt="지인소개 이벤트 배너" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: right center; display: block;" />
         <div class="sl-col" style="position: absolute; top: 0; left: 0; height: 100%; width: 58%; display: flex; flex-direction: column; padding-left: 7%; color: #1e293b; box-sizing: border-box; word-break: keep-all;">
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.9vw;">
-            <div class="sl-lead" style="font-size: min(24px, 2.2vw); font-weight: 600; opacity: 0.9; line-height: 1.3;">지인이 개통하면 소개한 분께</div>
+          <div class="sl-t0" style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.9vw;">
+            <div class="sl-lead" style="font-size: min(24px, 2.2vw); font-weight: 600; opacity: 0.9; line-height: 1.3; margin-bottom: min(8px, 0.75vw);">지인이 개통하면 소개한 분께</div>
             <div class="sl-big" style="font-size: min(56px, 5vw); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15;"><span style="color: #2563eb; font-size: 1.2em; font-weight: 800;">5만원</span> 무제한 지급</div>
             <div class="sl-sub" style="font-size: min(20px, 1.9vw); font-weight: 500; opacity: 0.85; line-height: 1.4;">신세계 상품권, 몇 명을 소개해도 매번 드려요</div>
           </div>
@@ -1608,19 +1630,19 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
   <div style="{{ eventGrid }}">
     <sc-for list="{{ events }}" as="ev" hint-placeholder-count="5">
       <div onClick="{{ ev.open }}" style="background: #fff; border: 1px solid #e8ecf2; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: box-shadow 0.18s ease, transform 0.18s ease;" style-hover="box-shadow: 0 10px 26px rgba(16,24,40,0.08); transform: translateY(-2px);">
-        <div style="width: 100%; aspect-ratio: 2.9 / 1; background: #f1f5f9; position: relative; overflow: hidden; container-type: inline-size;">
+        <div class="bn" style="width: 100%; aspect-ratio: 2.9 / 1; background: #f1f5f9; position: relative; overflow: hidden; container-type: inline-size;">
           <sc-if value="{{ ev.img }}" hint-placeholder-val="{{ false }}">
             <img src="{{ ev.img }}" alt="{{ ev.title }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy" decoding="async" />
           </sc-if>
           <sc-if value="{{ ev.hasText }}" hint-placeholder-val="{{ false }}">
-            <div style="{{ ev.overlayStyle }}">
-              <div style="display: flex; flex-direction: column; gap: 1cqw;">
+            <div class="sl-col" style="{{ ev.overlayStyle }}">
+              <div class="sl-t0" style="display: flex; flex-direction: column; gap: 1cqw;">
                 <sc-if value="{{ ev.lead }}" hint-placeholder-val="{{ false }}">
-                  <div style="font-size: 3.1cqw; font-weight: 600; opacity: 0.9;">{{ ev.lead }}</div>
+                  <div class="sl-lead" style="font-size: 3.1cqw; font-weight: 600; opacity: 0.9;">{{ ev.lead }}</div>
                 </sc-if>
-                <div style="{{ ev.bigStyle }}">{{ ev.bigA }}<span style="{{ ev.accentStyle }}">{{ ev.bigB }}</span>{{ ev.bigC }}</div>
+                <div class="sl-big" style="{{ ev.bigStyle }}">{{ ev.bigA }}<span style="{{ ev.accentStyle }}">{{ ev.bigB }}</span>{{ ev.bigC }}</div>
                 <sc-if value="{{ ev.mid }}" hint-placeholder-val="{{ false }}">
-                  <div style="{{ ev.midStyle }}">{{ ev.mid }}</div>
+                  <div class="sl-sub" style="{{ ev.midStyle }}">{{ ev.mid }}</div>
                 </sc-if>
                 <sc-if value="{{ ev.hasSmall }}" hint-placeholder-val="{{ false }}">
                   <div style="{{ ev.smallStyle }}">{{ ev.smallA }}<span style="{{ ev.accentStyle }}">{{ ev.smallB }}</span>{{ ev.smallC }}</div>
@@ -2164,17 +2186,17 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
   <h1 style="font-size: 27px; font-weight: 700; color: #0f172a; margin: 0 0 10px; letter-spacing: -0.8px; line-height: 1.35; word-break: keep-all;">{{ evd.title }}</h1>
   <p style="margin: 0 0 26px; font-size: 14px; color: #94a3b8; font-weight: 500;">이벤트 기간 {{ evd.date }}</p>
 
-  <div style="width: 100%; border-radius: 14px; overflow: hidden; background: #f1f5f9; margin-bottom: 36px; position: relative; container-type: inline-size;">
+  <div class="bn" style="width: 100%; border-radius: 14px; overflow: hidden; background: #f1f5f9; margin-bottom: 36px; position: relative; container-type: inline-size;">
     <img src="{{ evd.img }}" alt="{{ evd.title }}" style="width: 100%; height: auto; display: block;" loading="lazy" decoding="async" />
     <sc-if value="{{ evd.hasText }}" hint-placeholder-val="{{ false }}">
-      <div style="{{ evd.overlayStyle }}">
-        <div style="display: flex; flex-direction: column; gap: 1cqw;">
+      <div class="sl-col" style="{{ evd.overlayStyle }}">
+        <div class="sl-t0" style="display: flex; flex-direction: column; gap: 1cqw;">
           <sc-if value="{{ evd.lead }}" hint-placeholder-val="{{ false }}">
-            <div style="font-size: 3.1cqw; font-weight: 600; opacity: 0.9;">{{ evd.lead }}</div>
+            <div class="sl-lead" style="font-size: 3.1cqw; font-weight: 600; opacity: 0.9;">{{ evd.lead }}</div>
           </sc-if>
-          <div style="{{ evd.bigStyle }}">{{ evd.bigA }}<span style="{{ evd.accentStyle }}">{{ evd.bigB }}</span>{{ evd.bigC }}</div>
+          <div class="sl-big" style="{{ evd.bigStyle }}">{{ evd.bigA }}<span style="{{ evd.accentStyle }}">{{ evd.bigB }}</span>{{ evd.bigC }}</div>
           <sc-if value="{{ evd.mid }}" hint-placeholder-val="{{ false }}">
-            <div style="{{ evd.midStyle }}">{{ evd.mid }}</div>
+            <div class="sl-sub" style="{{ evd.midStyle }}">{{ evd.mid }}</div>
           </sc-if>
           <sc-if value="{{ evd.hasSmall }}" hint-placeholder-val="{{ false }}">
             <div style="{{ evd.smallStyle }}">{{ evd.smallA }}<span style="{{ evd.accentStyle }}">{{ evd.smallB }}</span>{{ evd.smallC }}</div>
@@ -3381,6 +3403,8 @@ class Component extends DCLogic {
     isMobile: window.innerWidth <= 800,
     winW: window.innerWidth,
     modalOpen: false,
+    qbarClosed: (() => { try { return sessionStorage.getItem('qbarClosed') === '1'; } catch (e) { return false; } })(),
+    qbarPhone: '',
     modalName: '',
     modalPhone: '',
     modalAgree: true,
@@ -3753,9 +3777,20 @@ class Component extends DCLogic {
     const focuses = s.focus ? [s.focus] : ['popular'];
     const speedRank = { low: 0, mid: 1, high: 2 };
     const wantIdx = speedRank[s.speed] != null ? speedRank[s.speed] : 1;
+    // 속도 구간은 실제 속도로 판단 (목록 순서로 하면 헬로비전 160M·스카이라이프 200M이 '500M'으로 잡힘)
     const netIdx = (item) => {
-      const list = INTERNET_PLANS[item.c] || [];
-      return Math.max(0, list.findIndex(p => p.id === item.net));
+      const p = (INTERNET_PLANS[item.c] || []).find(x => x.id === item.net);
+      if (!p) return 0;
+      const mb = p.nameSuffix === 'Gbps' ? Number(p.name) * 1000 : Number(p.name);
+      return mb >= 1000 ? 2 : (mb >= 400 ? 1 : 0);
+    };
+    // 같은 구간 안에서는 고른 속도(100/500/1000M)에 더 가까운 상품 우선 (예: 100M 선택 시 헬로비전 160M보다 100M)
+    const wantMb = [100, 500, 1000][wantIdx];
+    const mbGap = (item) => {
+      const p = (INTERNET_PLANS[item.c] || []).find(x => x.id === item.net);
+      if (!p) return 0;
+      const mb = p.nameSuffix === 'Gbps' ? Number(p.name) * 1000 : Number(p.name);
+      return Math.abs(Math.log(mb / wantMb));
     };
     const num = (v) => Number(String(v || '').replace(/[^0-9]/g, '')) || 0;
     const chans = (it) => num((String(it.specs).match(/(\d+)채널/) || [])[1]);
@@ -3769,7 +3804,7 @@ class Component extends DCLogic {
     const score = (f) => (a, b) => {
       const d = focusKey(f, a) - focusKey(f, b);
       if (d !== 0) return d;
-      return Math.abs(netIdx(a) - wantIdx) - Math.abs(netIdx(b) - wantIdx);
+      return (Math.abs(netIdx(a) - wantIdx) - Math.abs(netIdx(b) - wantIdx)) || (mbGap(a) - mbGap(b));
     };
     return focuses.filter(f => FOCUS_META[f]).map(f => {
       const sc = score(f);
@@ -3787,7 +3822,7 @@ class Component extends DCLogic {
         s.carrier.forEach(cc => {
           const cTv = isNet ? null : ktTv[cc];
           const pool = CATALOG.filter(it => it.c === cc && !it.only && (isNet ? !it.tv : (it.tv && (!cTv || it.tvId === cTv))))
-            .sort((a, b) => (Math.abs(netIdx(a) - wantIdx) - Math.abs(netIdx(b) - wantIdx)) || ((a.gen ? 1 : 0) - (b.gen ? 1 : 0)));
+            .sort((a, b) => (Math.abs(netIdx(a) - wantIdx) - Math.abs(netIdx(b) - wantIdx)) || (mbGap(a) - mbGap(b)) || ((a.gen ? 1 : 0) - (b.gen ? 1 : 0)));
           if (pool[0] && !(pool[0].fixedTv && netIdx(pool[0]) !== wantIdx)) picked.push(pool[0]);
         });
       }
@@ -4237,6 +4272,29 @@ class Component extends DCLogic {
     }).catch(e => console.error('firebase load', e));
   }
 
+  // 인터넷 요금 화면에서 고른 상품을 상담 접수 데이터 칸에 맞춰 정리 (그 외 화면은 빈 값)
+  selectionFields() {
+    try {
+      const s = this.state;
+      if (!/^\/internet/.test(s.route)) return {};
+      const c = s.carrierId;
+      const find = (list, id) => (list || []).find(x => x.id === id) || null;
+      const carrier = find(CARRIERS, c);
+      const net = find(INTERNET_PLANS[c], s.internetId);
+      const tv = s.condition === '인터넷 + TV' ? find(TV_PLANS[c], s.tvId) : null;
+      const dis = find(DISCOUNT_PLANS[c], s.discountId);
+      const iv = this.internetVals() || {};
+      return {
+        carrier: carrier ? carrier.name : '',
+        productCondition: s.condition === '인터넷 단독' ? '인터넷단독' : '인터넷+TV',
+        internetSpeed: net ? net.name + 'Mbps' : '',
+        tvProduct: tv ? tv.name + (tv.desc ? ' (' + tv.desc + ')' : '') : '',
+        bundleDiscount: dis ? dis.name : '',
+        estimatedMonthly: iv.moTotal ? iv.moTotal + '원' : ''
+      };
+    } catch (e) { return {}; }
+  }
+
   currentSelectionText() {
     const s = this.state;
     if (!/^\/internet/.test(s.route)) return '';
@@ -4259,6 +4317,7 @@ class Component extends DCLogic {
     const digitsOnly = String(payload.phone || '').replace(/[^0-9]/g, '');
     if (!/^01[016789][0-9]{7,8}$/.test(digitsOnly)) { fail(new Error('invalid phone')); return; }
     done();
+    if (!payload.sel) payload = Object.assign({}, payload, { sel: this.selectionFields() });
     const run = (fb) => fb.addConsult(payload).catch(e => console.error('consult', e));
     if (this._fb && this._fb.addConsult) { run(this._fb); return; }
     import(new URL('firebase-boards.js', document.baseURI).href).then(fb => { this._fb = fb; run(fb); }).catch(fail);
@@ -5151,6 +5210,7 @@ class Component extends DCLogic {
     const isBoard = route === '/selfjoin' || route === '/self' || route === '/recommend' || route === '/terms' || route === '/privacy' || route === '/qna' || route === '/reviews' || route === '/qna/write' || route === '/reviews/write' || route === '/complaint' || route === '/support' || route === '/usim-guide' || /^\/review\//.test(route);
     const pendingKey = (isEvents || isEventDetail || isBoard) ? null : Object.keys(PAGE_TITLES).find(k => route === k || route.indexOf(k + '/') === 0);
     const isInternet = route === '/internet';
+    const qbarOn = !!this.state.isMobile && !this.state.qbarClosed && !this.state.modalOpen && !isInternet && route !== '/selfjoin';
 
     return Object.assign(this.internetVals(), this.boardVals(), {
       plansRef: this._plansRef || (this._plansRef = React.createRef()),
@@ -5163,7 +5223,7 @@ class Component extends DCLogic {
         try { navigator.clipboard.writeText('1800-9774'); } catch (err) {}
         this.setState({ pcCallCopied: true });
       },
-      footerPadBottom: (isInternet && this.state.inetCtaShown && !this.state.inetCtaHidden) ? '180px' : '0px',
+      footerPadBottom: (isInternet && this.state.inetCtaShown && !this.state.inetCtaHidden) ? '180px' : (qbarOn ? '86px' : '0px'),
       inetCtaVisible: !!this.state.inetCtaShown && !this.state.inetCtaHidden,
       goSelf: () => {
         this.setState({ quizStep: 0, quizSel: { product: 'tv', focus: 'popular', usim: 'no' } });
@@ -5176,7 +5236,20 @@ class Component extends DCLogic {
         this.setState({ inetCtaHidden: true });
       },
       isHome: route === '/' || (!pendingKey && !isInternet && !isEvents && !isEventDetail && !isBoard),
-      homeCtaShow: (route === '/' || (!pendingKey && !isInternet && !isEvents && !isEventDetail && !isBoard)) && !!this.state.homeCtaOn && !this.state.modalOpen,
+      homeCtaShow: (route === '/' || (!pendingKey && !isInternet && !isEvents && !isEventDetail && !isBoard)) && !!this.state.homeCtaOn && !this.state.modalOpen && !qbarOn,
+      qbarShow: qbarOn,
+      qbarPhone: this.state.qbarPhone || '',
+      qbarAgree: this.state.qbarAgree !== false,
+      setQbarPhone: (e) => this.setState({ qbarPhone: fmtPhone(e.target.value) }),
+      setQbarAgree: (e) => this.setState({ qbarAgree: e.target.checked }),
+      qbarClose: () => { try { sessionStorage.setItem('qbarClosed', '1'); } catch (e) {} this.setState({ qbarClosed: true }); },
+      qbarSubmit: () => {
+        const phone = (this.state.qbarPhone || '').trim();
+        if (!phone) { alert('휴대폰 번호를 입력해주세요.'); return; }
+        if (this.state.qbarAgree === false) { alert('개인정보 수집이용에 동의해주세요.'); return; }
+        this.submitConsult({ source: '모바일 하단 상담신청', name: '', phone, memo: '' }, '상담신청이 완료되었습니다. 곧 연락드리겠습니다.');
+        if (/^01[016789][0-9]{7,8}$/.test(phone.replace(/[^0-9]/g, ''))) { try { sessionStorage.setItem('qbarClosed', '1'); } catch (e) {} this.setState({ qbarPhone: '', qbarClosed: true }); }
+      },
       faqOpenIdx: this.state.faqOpen,
       homeFaqs: HOME_FAQ_Q.map((q, i) => {
         const f = FAQS_RAW.find(x => x.q === q) || { q, a: '' };
