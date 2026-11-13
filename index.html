@@ -4271,9 +4271,15 @@ class Component extends DCLogic {
       });
       // 직접 추가한 후기
       [
-        { id: 'manual-review-20261110', title: '인터넷 가입', author: '류**', category: '인터넷', rating: 5, views: 0,
+        { id: 'manual-review-20261110', title: '인터넷 가입', author: '류**', category: '인터넷', rating: 5, views: 0, imageUrl: 'images/review-ryu-1110.webp',
           createdAt: new Date(2026, 10, 10, 12).getTime(),
-          content: '응답 엄청 빠르시고 페이백도 제일 많이 주셔요. 원스톱으로 따로 해지할 필요도 없어서 너무 편했어요' }
+          content: '응답 엄청 빠르시고 페이백도 제일 많이 주셔요. 원스톱으로 따로 해지할 필요도 없어서 너무 편했어요' },
+        { id: 'manual-review-20261012', title: '인터넷가입', author: '이**', category: '인터넷', rating: 5, views: 0, imageUrl: 'images/review-lee-1012.webp',
+          createdAt: new Date(2026, 9, 12, 12).getTime(),
+          content: '10곳이상 견적비교해봤는데\n가장 잘 챙겨주셨고\n설치하자마자 지원금도 바로 받았습니다\n지인들한테 추천할게요 감사합니다~' },
+        { id: 'manual-review-20261011', title: '인터넷가입', author: '황**', category: '인터넷', rating: 5, views: 0, imageUrl: 'images/review-hwang-1011.webp',
+          createdAt: new Date(2026, 9, 11, 12).getTime(),
+          content: '인터넷 약정이 끝나서 이곳저곳 알아보기도 하고 숨고에도 올려봤는데 여기가 제일 자세히 알려주시면서 친절하시더라구요~거기다 지원금도 다른곳에 비해 잘챙겨주시고요!! 당일 바로 신청하고 이틀뒤 설치완료!!감사합니다~^^' }
       ].forEach(o => this._seedRev.push(norm(o, 'review')));
       this._seedRev.sort((a, b) => b.createdAt - a.createdAt);
       this.setState({ reviews: this._seedRev.slice() });
