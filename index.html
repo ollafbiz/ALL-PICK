@@ -4269,6 +4269,13 @@ class Component extends DCLogic {
         n.answer = shiftDatesInText(n.answer, 97);
         return n;
       });
+      // 직접 추가한 후기
+      [
+        { id: 'manual-review-20261110', title: '인터넷 가입', author: '류**', category: '인터넷', rating: 5, views: 0,
+          createdAt: new Date(2026, 10, 10, 12).getTime(),
+          content: '응답 엄청 빠르시고 페이백도 제일 많이 주셔요. 원스톱으로 따로 해지할 필요도 없어서 너무 편했어요' }
+      ].forEach(o => this._seedRev.push(norm(o, 'review')));
+      this._seedRev.sort((a, b) => b.createdAt - a.createdAt);
       this.setState({ reviews: this._seedRev.slice() });
       this.syncFirestore();
     }).catch(e => console.error('review seed', e && e.message, e));
@@ -4344,8 +4351,20 @@ class Component extends DCLogic {
       const live = rows.map(o => norm(o, 'qna'));
       this.setState({ qna: [...live, ...(this._seedQna || [])].sort((a, b) => b.createdAt - a.createdAt) });
     }).catch(e => console.warn('ask fetch', e));
+    // 후기 본문 앞의 '* 개통 일자 : 20261109' 줄을 빼고, 그 날짜를 등록일로 사용
+    const withInstall = (r) => {
+      const m = /^\s*\*?\s*개통\s*일자\s*[:：]\s*([0-9.\-\/ ]{6,12})\s*/.exec(r.content || '');
+      if (!m) return r;
+      const d = m[1].replace(/[^0-9]/g, '');
+      const out = Object.assign({}, r, { content: (r.content || '').slice(m[0].length).replace(/^\s+/, '') });
+      if (d.length === 8) {
+        const t = new Date(+d.slice(0, 4), +d.slice(4, 6) - 1, +d.slice(6, 8), 12).getTime();
+        if (!isNaN(t)) out.createdAt = t;
+      }
+      return out;
+    };
     this._fb.fetchCollection('reviews').then(rows => {
-      const live = rows.map(o => norm(o, 'review'));
+      const live = rows.map(o => withInstall(norm(o, 'review')));
       this.setState({ reviews: [...live, ...(this._seedRev || [])].sort((a, b) => b.createdAt - a.createdAt) });
     }).catch(e => console.warn('reviews fetch', e));
   }
