@@ -2081,9 +2081,9 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
       </div>
       <div>
         <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 7px;">사진 첨부 (선택)</label>
-        <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1.5px dashed #cbd5e1; border-radius: 12px; padding: 26px 18px; cursor: pointer; background: #fafbfd;">
+        <label onDragEnter="{{ qfDrag.over }}" onDragOver="{{ qfDrag.over }}" onDragLeave="{{ qfDrag.leave }}" onDrop="{{ qfDrag.drop }}" style="{{ qfDrag.style }}">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
-          <span style="font-size: 13.5px; font-weight: 600; color: #475569;">사진을 선택해주세요</span>
+          <span style="font-size: 13.5px; font-weight: 600; color: #475569;">사진을 선택하거나 여기로 끌어다 놓으세요</span>
           <span style="font-size: 12px; color: #94a3b8;">JPG, PNG · 최대 5장</span>
           <input type="file" accept="image/*" multiple="{{ true }}" onChange="{{ onQfFiles }}" style="display: none;" />
         </label>
@@ -2122,9 +2122,9 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
     <div style="display: flex; flex-direction: column; gap: 18px;">
       <div>
         <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 7px;">사진 첨부 <span style="color: #e11d48;">*</span></label>
-        <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1.5px dashed #cbd5e1; border-radius: 12px; padding: 26px 18px; cursor: pointer; background: #fafbfd;">
+        <label onDragEnter="{{ rfDrag.over }}" onDragOver="{{ rfDrag.over }}" onDragLeave="{{ rfDrag.leave }}" onDrop="{{ rfDrag.drop }}" style="{{ rfDrag.style }}">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
-          <span style="font-size: 13.5px; font-weight: 600; color: #475569;">사진을 선택해주세요</span>
+          <span style="font-size: 13.5px; font-weight: 600; color: #475569;">사진을 선택하거나 여기로 끌어다 놓으세요</span>
           <span style="font-size: 12px; color: #94a3b8;">JPG, PNG · 최대 5장</span>
           <input type="file" accept="image/*" multiple="{{ true }}" onChange="{{ onRfFiles }}" style="display: none;" />
         </label>
@@ -2146,7 +2146,7 @@ main[data-screen-label="홈"] .sl-big { font-weight: 700 !important; letter-spac
         </div>
         <div>
           <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 7px;">설치일 <span style="color: #e11d48;">*</span></label>
-          <input value="{{ rf.installDate }}" onChange="{{ setRfInstall }}" placeholder="2026-09-01" style="width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; font-weight: 600; outline: none;" />
+          <input value="{{ rf.installDate }}" onChange="{{ setRfInstall }}" placeholder="예) 20261109" inputmode="numeric" maxlength="10" style="width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; font-weight: 600; outline: none;" />
         </div>
         <div>
           <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 7px;">비밀번호 <span style="color: #e11d48;">*</span></label>
@@ -4467,6 +4467,21 @@ class Component extends DCLogic {
         this.setState(s => ({ [key]: [...(s[key] || []), ...list].slice(0, 5) }));
       });
     };
+    // 사진 칸에 끌어다 놓기(드래그 앤 드롭)
+    const dragZone = (key) => {
+      const on = this.state.dragKey === key;
+      const stop = (e) => { e.preventDefault(); e.stopPropagation(); };
+      return {
+        over: (e) => { stop(e); if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'; if (!on) this.setState({ dragKey: key }); },
+        leave: (e) => { stop(e); if (e.currentTarget.contains(e.relatedTarget)) return; this.setState({ dragKey: '' }); },
+        drop: (e) => {
+          stop(e); this.setState({ dragKey: '' });
+          const files = Array.from((e.dataTransfer && e.dataTransfer.files) || []).filter(f => /^image\//.test(f.type));
+          if (files.length) pickFiles(key)({ target: { files, value: '' } });
+        },
+        style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', border: on ? '1.5px dashed #4167f6' : '1.5px dashed #cbd5e1', borderRadius: '12px', padding: '26px 18px', cursor: 'pointer', background: on ? '#eef3ff' : '#fafbfd', transition: 'background .15s, border-color .15s' }
+      };
+    };
     const dropFile = (key, idx) => () => {
       this.setState(s => ({ [key]: (s[key] || []).filter((_, i) => i !== idx) }));
     };
@@ -4613,12 +4628,19 @@ class Component extends DCLogic {
       closeRWrite: () => { location.hash = '#/reviews'; try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} },
       rf: this.state.rf || { author: '', installDate: '', password: '', title: '', content: '', category: 'KT', rating: 5 },
       setRfAuthor: rset('author'),
-      setRfInstall: rset('installDate'),
+      // 설치일: 숫자만 입력해도 2026-11-09 형태로 자동 변환
+      setRfInstall: (e) => {
+        const d = String(e.target.value || '').replace(/[^0-9]/g, '').slice(0, 8);
+        const v = d.length > 6 ? d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6) : d.length > 4 ? d.slice(0, 4) + '-' + d.slice(4) : d;
+        this.setState(s => ({ rf: Object.assign({}, RDEF, s.rf, { installDate: v }) }));
+      },
       setRfPassword: rset('password'),
       setRfTitle: rset('title'),
       setRfContent: rset('content'),
       setRfCategory: rset('category'),
       onRfFiles: pickFiles('rfPhotos'),
+      rfDrag: dragZone('rfPhotos'),
+      qfDrag: dragZone('qfPhotos'),
       rfFiles: (this.state.rfPhotos || []).map((p, i) => ({ url: p.url, remove: dropFile('rfPhotos', i) })),
       rfHasFiles: (this.state.rfPhotos || []).length > 0,
       onQfFiles: pickFiles('qfPhotos'),
@@ -4629,7 +4651,7 @@ class Component extends DCLogic {
         const f = this.state.rf || {};
         if (!(this.state.rfPhotos || []).length) { alert('사진을 1장 이상 첨부해주세요.'); return; }
         if (!f.author) { alert('성함을 입력해주세요.'); return; }
-        if (!f.installDate) { alert('설치일을 입력해주세요.'); return; }
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(f.installDate || '')) { alert('설치일을 8자리 숫자로 입력해주세요. (예: 20261109)'); return; }
         if (!f.password) { alert('비밀번호를 입력해주세요.'); return; }
         if (!f.title) { alert('제목을 입력해주세요.'); return; }
         if (!f.content) { alert('내용을 입력해주세요.'); return; }
