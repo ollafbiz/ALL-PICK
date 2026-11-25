@@ -11,6 +11,7 @@ async function sendMail(b, phoneHyphen) {
   const rows = [
     ['접수 경로', b.source], ['이름', b.name || '(미입력)'], ['연락처', phoneHyphen],
     ['통신사', b.carrier || '-'], ['선택 상품', b.serviceDetail || b.interest || '-'], ['문의 내용', b.memo || b.message || '(없음)'],
+    ['첫유입검색어', b.firstKeyword || '-'], ['첫유입경로', b.firstSource || '-'],
     ['유입 페이지', b.pageUrl], ['이전 페이지', b.referrer || '-'], ['utm_source', b.utm_source || '-'],
     ['접수 시각', new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })]
   ];
